@@ -1,16 +1,21 @@
 const app = require('./app');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
-const db = require('./models');
+const sequelize = require('./config/database');
+const Product = require('./models/product.model');
 
 const port = process.env.PORT || 5000;
 
-// db.sequelize.sync().then(() => {
-//   app.listen(port, () => {
-//     console.log(`App running on port ${port}...`);
-//   });
-// });
+sequelize.authenticate().then(() => console.log('connected'));
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}`);
-});
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(port);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+// app.listen(port, () => {
+//   console.log(`App running on port ${port}`);
+// });

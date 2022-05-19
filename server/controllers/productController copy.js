@@ -4,7 +4,7 @@ exports.checkID = (req, res, next, val) => {
   next();
 };
 
-exports.getAllRecipes = (req, res) => {
+exports.getAllProducts = (req, res) => {
   res.status(200).json({
     offset: 0,
     number: 2,
@@ -36,7 +36,7 @@ exports.getAllRecipes = (req, res) => {
 };
 
 
-exports.getRecipe = (req, res) => {
+exports.getProduct = (req, res) => {
     res.status(200).json({
       id: 716429,
       title: 'Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs',
