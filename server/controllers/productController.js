@@ -1,4 +1,8 @@
-const Product = require('../models/product.model');
+const {
+  Recipe,
+  Product,
+  Ingredient,
+} = require('../models/Product/associations');
 
 // exports.checkID = (req, res, next, val) => {
 //   if (+val > 10)
@@ -14,31 +18,53 @@ exports.getAllProducts = async (req, res) => {
 exports.getProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findByPk(+id);
+    const product = await Product.findAll({
+      where: {
+        id,
+      },
+      include: {
+        model: Ingredient,
+        through: {
+          attributes: ['ingredientText', 'unit', 'ingredientAmount']
+        }
+      },
+    });
     res.status(200).json(product);
   } catch (err) {
     res
       .status(400)
-      .json({ status: 'fail', message: 'error trying to get product' });
+      .json({ status: 'fail', message: `error trying to get product ${err}` });
   }
 };
 
 exports.createProduct = async (req, res) => {
-  const { title, imageUrl, price, description } = req.body;
+  const { id: productId, extendedIngredients } = req.body;
+  const ingredients = extendedIngredients.map((val) => {
+    const {
+      id: ingredientId,
+      amount: ingredientAmount,
+      unit,
+      original: ingredientText,
+    } = val;
+    return { ingredientAmount, unit, ingredientText, productId, ingredientId };
+  });
   try {
     await Product.create(req.body);
+    await Recipe.bulkCreate(ingredients);
     res.status(201).json({ status: 'ok', message: 'success' });
   } catch (err) {
-    res
-      .status(400)
-      .json({ status: 'fail', message: 'error trying to create product' });
+    res.status(400).json({
+      status: 'fail',
+      message: `error trying to create product ${err}`,
+      ingredients,
+    });
   }
 };
 
 exports.updateProduct = async (req, res) => {
   const { id } = req.body;
   try {
-    await Product.update(
+    const result = await Product.update(
       { ...req.body },
       {
         where: {
@@ -46,26 +72,32 @@ exports.updateProduct = async (req, res) => {
         },
       }
     );
-    res.status(201).json({ status: 'ok', message: req.body });
-  } catch (err) {
+    if (!result[0]) throw new Error('Product does not exist');
     res
-      .status(400)
-      .json({ status: 'fail', message: 'error trying to update product' });
+      .status(201)
+      .json({ status: 'ok', message: `successfully update product ${id}` });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: `error trying to update product, ${err}`,
+    });
   }
 };
 
 exports.removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    await Product.destroy({
+    const result = await Product.destroy({
       where: {
         id,
       },
     });
+    if (!result[0]) throw new Error('Product does not exist');
     res.status(200).json({ status: 'ok', message: 'success' });
   } catch (err) {
-    res
-      .status(400)
-      .json({ status: 'fail', message: 'error trying to remove product' });
+    res.status(400).json({
+      status: 'fail',
+      message: `error trying to remove product ${id}, ${err}`,
+    });
   }
 };
