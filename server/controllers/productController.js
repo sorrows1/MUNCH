@@ -2,6 +2,8 @@ const {
   Recipe,
   Product,
   Ingredient,
+  Nutrient,
+  ProductNutrient,
 } = require('../models/Product/associations');
 
 // exports.checkID = (req, res, next, val) => {
@@ -11,8 +13,14 @@ const {
 // };
 
 exports.getAllProducts = async (req, res) => {
-  const listOfProducts = await Product.findAll();
-  res.status(200).json(listOfProducts);
+  try {
+    const listOfProducts = await Product.findAll();
+    res.status(200).json(listOfProducts);
+  } catch (err) {
+    res
+      .status(400)
+      .json({ status: 'fail', message: `error trying to get product ${err}` });
+  }
 };
 
 exports.getProduct = async (req, res) => {
@@ -22,12 +30,17 @@ exports.getProduct = async (req, res) => {
       where: {
         id,
       },
-      include: {
-        model: Ingredient,
-        through: {
-          attributes: ['ingredientText', 'unit', 'ingredientAmount']
-        }
-      },
+      include: [
+        {
+          model: Ingredient,
+          through: [
+            {
+              attributes: ['ingredientText', 'unit', 'ingredientAmount'],
+            },
+          ],
+        },
+        { model: Nutrient, through: { attributes: ['amount', 'percentOfDailyNeeds']} },
+      ],
     });
     res.status(200).json(product);
   } catch (err) {
@@ -38,7 +51,8 @@ exports.getProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const { id: productId, extendedIngredients } = req.body;
+  const { id: productId, extendedIngredients, nutrients } = req.body;
+
   const ingredients = extendedIngredients.map((val) => {
     const {
       id: ingredientId,
@@ -48,9 +62,19 @@ exports.createProduct = async (req, res) => {
     } = val;
     return { ingredientAmount, unit, ingredientText, productId, ingredientId };
   });
+
+  const newNutrients = nutrients.map((val) => {
+    return { ...val, productId };
+  });
+
   try {
+    // create all the related records
     await Product.create(req.body);
-    await Recipe.bulkCreate(ingredients);
+    await Promise.all([
+      Recipe.bulkCreate(ingredients),
+      ProductNutrient.bulkCreate(newNutrients),
+    ]);
+
     res.status(201).json({ status: 'ok', message: 'success' });
   } catch (err) {
     res.status(400).json({
