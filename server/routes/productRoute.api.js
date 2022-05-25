@@ -7,10 +7,13 @@ const router = express.Router();
 router
   .route('/')
   .get(productController.getAllProducts)
-  .post(productController.createProduct)
-  .patch(productController.updateProduct)
-  .delete(productController.removeProduct);
+  .post(productController.createProduct);
 
-router.route('/:id/information').get(productController.getProduct);
+
+router
+  .route('/:id')
+  .get(productController.getProduct)
+  .delete(productController.removeProduct)
+  .patch(productController.updateProduct);
 
 module.exports = router;

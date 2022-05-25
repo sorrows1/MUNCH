@@ -1,21 +1,23 @@
+const sequelize = require('../../config/database');
+const { DataTypes } = require('sequelize');
+
 const Product = require('./Product.model');
 const Ingredient = require('./Ingredient.model');
 const Nutrient = require('./Nutrient.model');
-const sequelize = require('../../config/database');
-const { DataTypes } = require('sequelize');
+const Type = require('./Type.model');
 
 const Recipe = sequelize.define(
   'recipe',
   {
-    ingredientText: { type: DataTypes.STRING, allowNull: false },
+    original: { type: DataTypes.STRING, allowNull: false },
     unit: { type: DataTypes.STRING, allowNull: false },
-    ingredientAmount: { type: DataTypes.DECIMAL(7, 2), allowNull: false },
+    amount: { type: DataTypes.DECIMAL(7, 2), allowNull: false },
   },
   { timestamps: false }
 );
 
 const ProductNutrient = sequelize.define(
-  'productNutrients',
+  'productNutrient',
   {
     amount: {
       type: DataTypes.DECIMAL(7, 2),
@@ -31,11 +33,14 @@ const ProductNutrient = sequelize.define(
   { timestamps: false }
 );
 
+const ProductType = sequelize.define('productType', {}, { timestamps: false });
+
 Product.belongsToMany(Ingredient, { through: Recipe, foreignKey: 'productId' });
 Ingredient.belongsToMany(Product, {
   through: Recipe,
   foreignKey: 'ingredientId',
 });
+
 
 Product.belongsToMany(Nutrient, {
   through: ProductNutrient,
@@ -46,8 +51,19 @@ Nutrient.belongsToMany(Product, {
   foreignKey: 'nutrientId',
 });
 
+
+Product.belongsToMany(Type, {
+  through: ProductType,
+  foreignKey: 'productId',
+});
+Type.belongsToMany(Product, {
+  through: ProductType,
+  foreignKey: 'typeId',
+});
+
+
+module.exports.Product = Product;
+
 module.exports.Recipe = Recipe;
 module.exports.ProductNutrient = ProductNutrient;
-module.exports.Product = Product;
-module.exports.Ingredient = Ingredient;
-module.exports.Nutrient = Nutrient;
+module.exports.ProductType = ProductType;

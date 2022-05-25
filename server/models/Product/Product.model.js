@@ -1,11 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const Product = sequelize.define('product', {
+const Product = sequelize.define('products', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    allowNull: false,
     primaryKey: true,
   },
   title: {
@@ -31,34 +30,8 @@ const Product = sequelize.define('product', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  dairyFree: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  glutenFree: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  ketogenic: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  lowFodmap: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  vegan: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  vegeterian: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  veryHealthy: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
+
 });
+
 
 module.exports = Product;

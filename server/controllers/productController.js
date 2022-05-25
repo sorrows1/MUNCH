@@ -1,10 +1,14 @@
+const Product = require('../models/Product/Product.model');
+const Ingredient = require('../models/Product/Ingredient.model');
+const Nutrient = require('../models/Product/Nutrient.model');
+const Type = require('../models/Product/Type.model');
 const {
   Recipe,
-  Product,
-  Ingredient,
-  Nutrient,
   ProductNutrient,
+  ProductType,
 } = require('../models/Product/associations');
+
+const addProductIdToAttributes = require('../helper/createProduct.helper');
 
 // exports.checkID = (req, res, next, val) => {
 //   if (+val > 10)
@@ -14,12 +18,12 @@ const {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const listOfProducts = await Product.findAll();
-    res.status(200).json(listOfProducts);
+    const products = await Product.findAll({ include: Type });
+    res.status(200).json(products);
   } catch (err) {
     res
-      .status(400)
-      .json({ status: 'fail', message: `error trying to get product ${err}` });
+      .status(500)
+      .json({ status: 'fail', message: `error trying to get product, ${err}` });
   }
 };
 
@@ -33,60 +37,61 @@ exports.getProduct = async (req, res) => {
       include: [
         {
           model: Ingredient,
-          through: [
-            {
-              attributes: ['ingredientText', 'unit', 'ingredientAmount'],
-            },
-          ],
+          through: {
+            attributes: ['original', 'unit', 'amount'],
+          },
         },
-        { model: Nutrient, through: { attributes: ['amount', 'percentOfDailyNeeds']} },
+        {
+          model: Nutrient,
+          through: { attributes: ['amount', 'percentOfDailyNeeds'] },
+        },
+        {
+          model: Type,
+          through: { attributes: [] },
+        },
       ],
     });
+    if (!product.length) throw new Error('Product does not exist');
     res.status(200).json(product);
   } catch (err) {
     res
-      .status(400)
-      .json({ status: 'fail', message: `error trying to get product ${err}` });
+      .status(404)
+      .json({ status: 'fail', message: `error trying to get product, ${err}` });
   }
 };
 
 exports.createProduct = async (req, res) => {
-  const { id: productId, extendedIngredients, nutrients } = req.body;
-
-  const ingredients = extendedIngredients.map((val) => {
-    const {
-      id: ingredientId,
-      amount: ingredientAmount,
-      unit,
-      original: ingredientText,
-    } = val;
-    return { ingredientAmount, unit, ingredientText, productId, ingredientId };
-  });
-
-  const newNutrients = nutrients.map((val) => {
-    return { ...val, productId };
-  });
+  const { extendedIngredients, nutrients, types } = req.body;
 
   try {
-    // create all the related records
-    await Product.create(req.body);
+    const { id } = await Product.create(req.body);
+
+    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
+      id,
+      extendedIngredients,
+      nutrients,
+      types
+    );
+
+    // create records in the many to many associations
     await Promise.all([
-      Recipe.bulkCreate(ingredients),
+      Recipe.bulkCreate(newRecipes),
       ProductNutrient.bulkCreate(newNutrients),
+      Product.bulkCreate(newTypes),
     ]);
 
     res.status(201).json({ status: 'ok', message: 'success' });
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
       message: `error trying to create product ${err}`,
-      ingredients,
     });
   }
 };
 
 exports.updateProduct = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
+  const { extendedIngredients, nutrients, types } = req.body;
   try {
     const result = await Product.update(
       { ...req.body },
@@ -97,11 +102,26 @@ exports.updateProduct = async (req, res) => {
       }
     );
     if (!result[0]) throw new Error('Product does not exist');
+
+    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
+      id,
+      extendedIngredients,
+      nutrients,
+      types
+    );
+
+    // create records in the many to many associations
+    await Promise.all([
+      Recipe.bulkCreate(newRecipes, { updateOnDuplicate: [] }),
+      ProductNutrient.bulkCreate(newNutrients, { updateOnDuplicate: [] }),
+      Product.bulkCreate(newTypes),
+    ]);
+
     res
-      .status(201)
+      .status(200)
       .json({ status: 'ok', message: `successfully update product ${id}` });
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: 'fail',
       message: `error trying to update product, ${err}`,
     });
@@ -116,10 +136,10 @@ exports.removeProduct = async (req, res) => {
         id,
       },
     });
-    if (!result[0]) throw new Error('Product does not exist');
-    res.status(200).json({ status: 'ok', message: 'success' });
+    if (!result) throw new Error(`Product ${id} does not exists!`);
+    res.status(204);
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: 'fail',
       message: `error trying to remove product ${id}, ${err}`,
     });

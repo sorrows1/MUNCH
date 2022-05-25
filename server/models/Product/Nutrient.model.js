@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
 const Nutrient = sequelize.define(
-  'nutrient',
+  'nutrients',
   {
     nutrientId: {
       type: DataTypes.INTEGER,
