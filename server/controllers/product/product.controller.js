@@ -64,7 +64,8 @@ exports.createProduct = async (req, res) => {
   const { extendedIngredients, nutrients, types } = req.body;
 
   try {
-    const { id } = await Product.create(req.body);
+    const product = await Product.create(req.body);
+    const { id } = product;
 
     const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
       id,
@@ -88,6 +89,8 @@ exports.createProduct = async (req, res) => {
     });
   }
 };
+
+
 
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
