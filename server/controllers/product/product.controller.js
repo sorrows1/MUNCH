@@ -1,12 +1,12 @@
-const Product = require('../models/Product/Product.model');
-const Ingredient = require('../models/Product/Ingredient.model');
-const Nutrient = require('../models/Product/Nutrient.model');
-const Type = require('../models/Product/Type.model');
+const Product = require('../../models/Product/Product.model');
+const Ingredient = require('../../models/Product/Ingredient.model');
+const Nutrient = require('../../models/Product/Nutrient.model');
+const Type = require('../../models/Product/Type.model');
 const {
   Recipe,
   ProductNutrient,
   ProductType,
-} = require('../models/Product/associations');
+} = require('../../models/Product/associations');
 
 const addProductIdToAttributes = require('../helper/createProduct.helper');
 
@@ -77,7 +77,7 @@ exports.createProduct = async (req, res) => {
     await Promise.all([
       Recipe.bulkCreate(newRecipes),
       ProductNutrient.bulkCreate(newNutrients),
-      Product.bulkCreate(newTypes),
+      ProductType.bulkCreate(newTypes),
     ]);
 
     res.status(201).json({ status: 'ok', message: 'success' });
@@ -91,7 +91,6 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { extendedIngredients, nutrients, types } = req.body;
   try {
     const result = await Product.update(
       { ...req.body },
@@ -102,21 +101,6 @@ exports.updateProduct = async (req, res) => {
       }
     );
     if (!result[0]) throw new Error('Product does not exist');
-
-    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
-      id,
-      extendedIngredients,
-      nutrients,
-      types
-    );
-
-    // create records in the many to many associations
-    await Promise.all([
-      Recipe.bulkCreate(newRecipes, { updateOnDuplicate: [] }),
-      ProductNutrient.bulkCreate(newNutrients, { updateOnDuplicate: [] }),
-      Product.bulkCreate(newTypes),
-    ]);
-
     res
       .status(200)
       .json({ status: 'ok', message: `successfully update product ${id}` });
