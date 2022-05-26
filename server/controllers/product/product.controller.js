@@ -8,7 +8,15 @@ const {
   ProductType,
 } = require('../../models/Product/associations');
 
-const addProductIdToAttributes = require('../helper/createProduct.helper');
+const addProductIdToAttributes = require('../../helper/addProductID.helper');
+const {
+  updateRecipeTable,
+  updateProductNutrientTable,
+  createProductTypes,
+  removeRecipes,
+  removeProductNutrients,
+  removeProductTypes,
+} = require('../../helper/updateProduct.helper');
 
 // exports.checkID = (req, res, next, val) => {
 //   if (+val > 10)
@@ -61,7 +69,7 @@ exports.getProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const { extendedIngredients, nutrients, types } = req.body;
+  const { ingredients, nutrients, types } = req.body;
 
   try {
     const product = await Product.create(req.body);
@@ -69,7 +77,7 @@ exports.createProduct = async (req, res) => {
 
     const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
       id,
-      extendedIngredients,
+      ingredients,
       nutrients,
       types
     );
@@ -90,11 +98,24 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-
-
 exports.updateProduct = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+    const {
+      createAndUpdate: { ingredients, nutrients, types },
+      remove: {
+        ingredients: removeIngredients,
+        nutrients: removeNutrients,
+        types: removeTypes,
+      },
+    } = req.body;
+
+    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
+      id,
+      ingredients,
+      nutrients,
+      types
+    );
     const result = await Product.update(
       { ...req.body },
       {
@@ -104,9 +125,30 @@ exports.updateProduct = async (req, res) => {
       }
     );
     if (!result[0]) throw new Error('Product does not exist');
+
+    if (newRecipes.length || newNutrients.length || newTypes.length) {
+      await Promise.all([
+        updateRecipeTable(newRecipes),
+        updateProductNutrientTable(newNutrients),
+        createProductTypes(newTypes),
+      ]);
+    }
+
+    if (
+      removeIngredients.length ||
+      removeNutrients.length ||
+      removeTypes.length
+    ) {
+      await Promise.all([
+        removeRecipes(id, removeIngredients),
+        removeProductNutrients(id, removeNutrients),
+        removeProductTypes(id, removeTypes),
+      ]);
+    }
+
     res
       .status(200)
-      .json({ status: 'ok', message: `successfully update product ${id}` });
+      .json({ status: 'ok', message: `successfully updated product ${id}` });
   } catch (err) {
     res.status(404).json({
       status: 'fail',
@@ -124,7 +166,7 @@ exports.removeProduct = async (req, res) => {
       },
     });
     if (!result) throw new Error(`Product ${id} does not exists!`);
-    res.status(204);
+    res.status(204).json();
   } catch (err) {
     res.status(404).json({
       status: 'fail',
