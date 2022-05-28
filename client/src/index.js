@@ -6,10 +6,9 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-import theme from './ui/theme';
-
+import { ThemeProvider } from '@mui/material';
 import App from './App';
-import { ThemeProvider } from '@emotion/react';
+import theme from './ui/theme';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -17,11 +16,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
           <App />
-        </BrowserRouter>
-      </ThemeProvider>
+        </ThemeProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
