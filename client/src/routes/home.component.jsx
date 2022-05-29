@@ -13,12 +13,11 @@ import { Container } from '@mui/system';
 const Home = () => {
   return (
     <main>
-    <CssBaseline />
       <Container maxWidth='mx' sx={{mt:7, maxWidth:'1300px'}}>
         <Grid container spacing={10} alignItems='center'>
           <Grid item sm={12} md={6}>
             <Stack>
-            <Typography variant='h2' component='h1' color='textPrimary' sx={{fontSize: 52, lineHeight:1.05, fontWeight: 700, mb:3.2}}>
+            <Typography variant='h2' component='h1' color='textPrimary' sx={{ lineHeight:1.05, mb:3.2}}>
               A healthy meal delivered to your door, every single day
             </Typography>
             <Typography variant='h6' component='p' color='textSecondary' sx={{fontWeight: 400, mb:3.8}}>

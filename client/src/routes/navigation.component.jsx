@@ -70,9 +70,8 @@ export const Navigation = (props) => {
 
   return (
     <>
-      <CssBaseline />
       <ElevationScroll>
-        <AppBar sx={{backgroundColor: 'primary.white', px: 4.8}} elevation={0}>
+        <AppBar sx={{ backgroundColor: 'primary.contrastText', px: 4.8}} elevation={0}>
           <Toolbar sx={{justifyContent: 'space-between', height: 86}}>
             <Link href='/'>
               <Box component='img' sx={{
@@ -83,19 +82,19 @@ export const Navigation = (props) => {
             </Link>
             <Stack direction='row' spacing={6} alignItems='center'>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
+                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
               </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
+                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
                 </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
+                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
                 </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
+                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
                 </Link>
-              <Button variant="contained" href="#" sx={{boxShadow: 'none', borderRadius: '9px', p:'8px 20px'}}>
-                <Typography color='primary.white' variant='h6' sx={{fontWeight: '600', fontSize: '1rem'}}>Sign in</Typography>
+              <Button variant="contained" href="#" sx={{ boxShadow: 'none', borderRadius: '9px', p:'8px 20px'}}>
+                <Typography variant='h5' sx={{fontWeight: '600', fontSize: '1rem'}}>Sign in</Typography>
               </Button>
             </Stack>
           </Toolbar>
