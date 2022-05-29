@@ -17,7 +17,7 @@ import {
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import Logo from '../../assets/logo.png'
+import Logo from '../assets/logo.png'
 
   const ScrollTop = (props) => {
     const { children } = props;
@@ -72,7 +72,7 @@ export const Navigation = (props) => {
     <>
       <CssBaseline />
       <ElevationScroll>
-        <AppBar sx={{backgroundColor: 'primary.white', px: 6}} elevation={0}>
+        <AppBar sx={{backgroundColor: 'primary.white', px: 4.8}} elevation={0}>
           <Toolbar sx={{justifyContent: 'space-between', height: 86}}>
             <Link href='/'>
               <Box component='img' sx={{
@@ -83,19 +83,19 @@ export const Navigation = (props) => {
             </Link>
             <Stack direction='row' spacing={6} alignItems='center'>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6'>Product</Typography>
+                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
               </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6'>Product</Typography>
+                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
                 </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6'>Product</Typography>
+                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
                 </Link>
               <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h6'>Product</Typography>
+                <Typography color='textPrimary' variant='h6' component='p'>Product</Typography>
                 </Link>
-              <Button variant="contained" href="#" sx={{boxShadow: 'none', borderRadius: '9px', p:'10px 20px'}}>
-                <Typography color='textSecondary' variant='h6' sx={{fontWeight: '600', fontSize: '1.1rem'}}>Try for free</Typography>
+              <Button variant="contained" href="#" sx={{boxShadow: 'none', borderRadius: '9px', p:'8px 20px'}}>
+                <Typography color='primary.white' variant='h6' sx={{fontWeight: '600', fontSize: '1rem'}}>Sign in</Typography>
               </Button>
             </Stack>
           </Toolbar>

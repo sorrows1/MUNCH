@@ -4,10 +4,11 @@ const primaryLight = '#fdf2e9';
 const primaryMain = '#e67e22';
 const primaryDark = '#cf711f';
 const primaryText = '#333';
-const secondaryText = '#fff';
+const secondaryText = '#555';
 const secondaryMain = '#1c78d3';
 
 const theme = createTheme({
+  spacing: 10,
   typography: {
     fontFamily: `"Rubik", "Helvetica", "Arial", sans-serif`,
   },
@@ -16,15 +17,15 @@ const theme = createTheme({
       light: `${primaryLight}`,
       main: `${primaryMain}`,
       dark: `${primaryDark}`,
-      white: `#fff`
+      white: `#fff`,
     },
     secondary: {
       main: `${secondaryMain}`,
     },
     text: {
       primary: `${primaryText}`,
-      secondary: `${secondaryText}`
-    }
+      secondary: `${secondaryText}`,
+    },
   },
 });
 
