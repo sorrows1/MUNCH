@@ -1,14 +1,13 @@
 import {
   Toolbar,
   Stack,
-  CssBaseline,
   Typography,
   Button,
   Grid,
 } from '@mui/material';
 import { Container } from '@mui/system';
 
-
+import Image from '../components/general/Image.component';
 
 const Home = () => {
   return (
@@ -24,8 +23,8 @@ const Home = () => {
               The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.
             </Typography>
             <Toolbar disableGutters>
-              <Button variant="contained" href="#" sx={{boxShadow: 'none', borderRadius: '9px'}}>
-                <Typography color='primary.white' variant='h6' sx={{fontWeight: '600', fontSize: '1.2rem', padding: '6px 18px'}} textTransform='capitalize'>Start eating well</Typography>
+              <Button variant="contained" href="#" sx={{boxShadow: 'none', padding: '11px 18px'}}>
+                <Typography variant='h6' >Start eating well</Typography>
               </Button>
             </Toolbar>
             </Stack>
@@ -33,7 +32,7 @@ const Home = () => {
           </Grid>
           <Grid item sm={12} md={6}>
             <picture>
-              <img src={require('../assets/imgs/hero.webp')} alt='Woman enjoying food, meals in storage container, and food bowls on a table' style={{maxWidth:'100%'}}></img>
+              <Image src='/static/imgs/hero.webp' alt='Woman enjoying food, meals in storage container, and food bowls on a table' />
             </picture>
           </Grid>
         </Grid>

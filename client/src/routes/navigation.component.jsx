@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link as RouterLink, Outlet } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -8,7 +8,6 @@ import {
   Zoom,
   Box,
   Fab,
-  CssBaseline,
   Typography,
   Link,
   Button
@@ -65,14 +64,21 @@ import Logo from '../assets/logo.png'
     });
   }
 
+  const NavLink = ({children, path}) => {
+    return (
+      <Link to={path} underline='none' component={RouterLink}>
+          <Typography color='textPrimary' variant='h5' component='p'>{children}</Typography>
+      </Link>
+    )
+  }
 
 export const Navigation = (props) => {
 
   return (
     <>
       <ElevationScroll>
-        <AppBar sx={{ backgroundColor: 'primary.contrastText', px: 4.8}} elevation={0}>
-          <Toolbar sx={{justifyContent: 'space-between', height: 86}}>
+        <AppBar sx={{ backgroundColor: 'grey.100', px: 4.8}} elevation={0}>
+          <Toolbar sx={{justifyContent:'space-between', height: 86}}>
             <Link href='/'>
               <Box component='img' sx={{
               height: 24,
@@ -81,19 +87,12 @@ export const Navigation = (props) => {
               src={Logo} />
             </Link>
             <Stack direction='row' spacing={6} alignItems='center'>
-              <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
-              </Link>
-              <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
-                </Link>
-              <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
-                </Link>
-              <Link href='/product' underline='none'>
-                <Typography color='textPrimary' variant='h5' component='p'>Product</Typography>
-                </Link>
-              <Button variant="contained" href="#" sx={{ boxShadow: 'none', borderRadius: '9px', p:'8px 20px'}}>
+              <NavLink path='product'>Product</NavLink>
+              <NavLink path='product'>Product</NavLink>
+              <NavLink path='product'>Product</NavLink>
+              <NavLink path='product'>Product</NavLink>
+              <NavLink path='product'>Product</NavLink>
+              <Button variant="contained" href="#" sx={{ boxShadow: 'none', p:'7px 29px'}}>
                 <Typography variant='h5' sx={{fontWeight: '600', fontSize: '1rem'}}>Sign in</Typography>
               </Button>
             </Stack>
