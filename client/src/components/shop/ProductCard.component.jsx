@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 
-import Image from '../general/Image.component';
+import Image from '../Image.component';
 
 const ProductCard = ( {product} ) => {
     const {id, title, cover, price} = product;

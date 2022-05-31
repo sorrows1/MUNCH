@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { Container } from '@mui/system';
 
-import Image from '../components/general/Image.component';
+import Image from '../components/Image.component';
 
 const Home = () => {
   return (
