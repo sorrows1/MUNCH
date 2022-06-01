@@ -1,8 +1,10 @@
 import { useState } from 'react';
 // material
 import { Menu, Button, MenuItem, Typography } from '@mui/material';
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // component
-import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -30,10 +32,12 @@ export default function ShopProductSort() {
         color="inherit"
         disableRipple
         onClick={handleOpen}
-        endIcon={<Iconify icon={open ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
+        endIcon={open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       >
-        Sort By:&nbsp;
-        <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
+        <Typography component="span" variant="subtitle1">
+          Sort By:&nbsp;
+        </Typography>
+        <Typography component="span" variant="subtitle1" sx={{ color: 'text.secondary' }}>
           Newest
         </Typography>
       </Button>

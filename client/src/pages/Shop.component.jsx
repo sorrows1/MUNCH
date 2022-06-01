@@ -1,164 +1,613 @@
+import { useState } from 'react';
+import { Stack} from '@mui/material';
 
-import { Typography, Stack, TextField, Popper, InputAdornment} from '@mui/material';
 
-import { styled } from '@mui/material/styles';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-import ProductList from '../components/shop/ProductList.component';
 import Section from '../components/Section.component';
+import { ProductFilterSidebar, ProductSort, ProductSearchBar, ProductList } from '../components/shop';
 
-const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
-  width: '280px !important',
-});
+const products = [
+    {
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "testing",
+        "description": "static/imgs/meal-2.webp",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },
+]
+
 
 const Shop = () => {
-    return ( 
-    <Section>
-      <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{mb: 3}}>
-        <TextField
-          placeholder='Search for product...'
-          sx={{ m: 1, width:252, transition: 'all 0.1s linear', ':focus-within': {width: 280} }}
-          margin='none'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchOutlinedIcon  sx={{ ml: 1, width: 20, height: 20, color: 'text.disabled' }} />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Stack>
+    const [ isOpenFilter, setIsOpenFilter ] = useState(false);
 
-    </Section>
+    const onOpenFilter = () => {
+      setIsOpenFilter(true)
+    }
+
+    const onCloseFilter = () => {
+      setIsOpenFilter(false)
+    }
+
+    return ( 
+      <main>
+        <Section>
+          <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{mb: 3}}>
+            <ProductSearchBar size='small' placeholder='Search product...' sx={{width:250}} />
+            <Stack direction='row'>
+              <ProductFilterSidebar isOpenFilter={isOpenFilter} onOpenFilter={onOpenFilter} onCloseFilter={onCloseFilter} />
+              <ProductSort />
+            </Stack>
+          </Stack>
+        </Section>
+        <Section>
+          <ProductList products={products} />
+        </Section>
+      </main>
       
     );
 }
  
 export default Shop;
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
-    year: 2001,
-  },
-  {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
-    year: 1980,
-  },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  {
-    title: 'The Lord of the Rings: The Two Towers',
-    year: 2002,
-  },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
-  {
-    title: 'Star Wars: Episode IV - A New Hope',
-    year: 1977,
-  },
-  { title: 'City of God', year: 2002 },
-  { title: 'Se7en', year: 1995 },
-  { title: 'The Silence of the Lambs', year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: 'Life Is Beautiful', year: 1997 },
-  { title: 'The Usual Suspects', year: 1995 },
-  { title: 'Léon: The Professional', year: 1994 },
-  { title: 'Spirited Away', year: 2001 },
-  { title: 'Saving Private Ryan', year: 1998 },
-  { title: 'Once Upon a Time in the West', year: 1968 },
-  { title: 'American History X', year: 1998 },
-  { title: 'Interstellar', year: 2014 },
-  { title: 'Casablanca', year: 1942 },
-  { title: 'City Lights', year: 1931 },
-  { title: 'Psycho', year: 1960 },
-  { title: 'The Green Mile', year: 1999 },
-  { title: 'The Intouchables', year: 2011 },
-  { title: 'Modern Times', year: 1936 },
-  { title: 'Raiders of the Lost Ark', year: 1981 },
-  { title: 'Rear Window', year: 1954 },
-  { title: 'The Pianist', year: 2002 },
-  { title: 'The Departed', year: 2006 },
-  { title: 'Terminator 2: Judgment Day', year: 1991 },
-  { title: 'Back to the Future', year: 1985 },
-  { title: 'Whiplash', year: 2014 },
-  { title: 'Gladiator', year: 2000 },
-  { title: 'Memento', year: 2000 },
-  { title: 'The Prestige', year: 2006 },
-  { title: 'The Lion King', year: 1994 },
-  { title: 'Apocalypse Now', year: 1979 },
-  { title: 'Alien', year: 1979 },
-  { title: 'Sunset Boulevard', year: 1950 },
-  {
-    title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-    year: 1964,
-  },
-  { title: 'The Great Dictator', year: 1940 },
-  { title: 'Cinema Paradiso', year: 1988 },
-  { title: 'The Lives of Others', year: 2006 },
-  { title: 'Grave of the Fireflies', year: 1988 },
-  { title: 'Paths of Glory', year: 1957 },
-  { title: 'Django Unchained', year: 2012 },
-  { title: 'The Shining', year: 1980 },
-  { title: 'WALL·E', year: 2008 },
-  { title: 'American Beauty', year: 1999 },
-  { title: 'The Dark Knight Rises', year: 2012 },
-  { title: 'Princess Mononoke', year: 1997 },
-  { title: 'Aliens', year: 1986 },
-  { title: 'Oldboy', year: 2003 },
-  { title: 'Once Upon a Time in America', year: 1984 },
-  { title: 'Witness for the Prosecution', year: 1957 },
-  { title: 'Das Boot', year: 1981 },
-  { title: 'Citizen Kane', year: 1941 },
-  { title: 'North by Northwest', year: 1959 },
-  { title: 'Vertigo', year: 1958 },
-  {
-    title: 'Star Wars: Episode VI - Return of the Jedi',
-    year: 1983,
-  },
-  { title: 'Reservoir Dogs', year: 1992 },
-  { title: 'Braveheart', year: 1995 },
-  { title: 'M', year: 1931 },
-  { title: 'Requiem for a Dream', year: 2000 },
-  { title: 'Amélie', year: 2001 },
-  { title: 'A Clockwork Orange', year: 1971 },
-  { title: 'Like Stars on Earth', year: 2007 },
-  { title: 'Taxi Driver', year: 1976 },
-  { title: 'Lawrence of Arabia', year: 1962 },
-  { title: 'Double Indemnity', year: 1944 },
-  {
-    title: 'Eternal Sunshine of the Spotless Mind',
-    year: 2004,
-  },
-  { title: 'Amadeus', year: 1984 },
-  { title: 'To Kill a Mockingbird', year: 1962 },
-  { title: 'Toy Story 3', year: 2010 },
-  { title: 'Logan', year: 2017 },
-  { title: 'Full Metal Jacket', year: 1987 },
-  { title: 'Dangal', year: 2016 },
-  { title: 'The Sting', year: 1973 },
-  { title: '2001: A Space Odyssey', year: 1968 },
-  { title: "Singin' in the Rain", year: 1952 },
-  { title: 'Toy Story', year: 1995 },
-  { title: 'Bicycle Thieves', year: 1948 },
-  { title: 'The Kid', year: 1921 },
-  { title: 'Inglourious Basterds', year: 2009 },
-  { title: 'Snatch', year: 2000 },
-  { title: '3 Idiots', year: 2009 },
-  { title: 'Monty Python and the Holy Grail', year: 1975 },
-];

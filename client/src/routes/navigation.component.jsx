@@ -93,7 +93,7 @@ export const Navigation = (props) => {
               <NavLink path='product'>Product</NavLink>
               <NavLink path='product'>Product</NavLink>
               <Button variant="contained" href="#" sx={{ boxShadow: 'none', p:'5px 29px'}}>
-                <Typography variant='h5' sx={{fontWeight: '600', fontSize: '1rem'}}>Sign in</Typography>
+                <Typography variant='h6'>Sign in</Typography>
               </Button>
             </Stack>
           </Toolbar>

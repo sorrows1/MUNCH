@@ -1,3 +1,5 @@
+import { Link as RouterLink } from 'react-router-dom';
+
 import {
   Toolbar,
   Stack,
@@ -12,7 +14,7 @@ import Image from '../components/Image.component';
 const Home = () => {
   return (
     <main>
-      <Container maxWidth='mx' sx={{mt:7, maxWidth:'1300px'}}>
+      <Container maxWidth='mx' sx={{mt:5, maxWidth:'1300px'}}>
         <Grid container spacing={10} alignItems='center'>
           <Grid item sm={12} md={6}>
             <Stack>
@@ -23,7 +25,7 @@ const Home = () => {
               The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.
             </Typography>
             <Toolbar disableGutters>
-              <Button variant="contained" href="#" sx={{boxShadow: 'none', padding: '11px 18px'}}>
+              <Button variant="contained" LinkComponent={RouterLink} to='/shop' sx={{boxShadow: 'none', padding: '11px 18px'}}>
                 <Typography variant='h6' >Start eating well</Typography>
               </Button>
             </Toolbar>

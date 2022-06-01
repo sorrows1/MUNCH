@@ -15,10 +15,13 @@ import {
   RadioGroup,
   FormControlLabel,
 } from '@mui/material';
+
+import FilterListIcon from '@mui/icons-material/FilterList';
+import CloseIcon from '@mui/icons-material/Close';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+
 // components
-import Iconify from '../../../components/Iconify';
-import Scrollbar from '../../../components/Scrollbar';
-import { ColorManyPicker } from '../../../components/color-utils';
+import Scrollbar from '../ScrollBar.component';
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +31,7 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
+export const FILTER_DIET_OPTIONS = ['Dairy Free', 'Gluten Free', 'Ketogenic', 'low Fodmap', 'Vegan', 'Vegeterian', 'Very Healthy'];
 export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
@@ -36,16 +39,7 @@ export const FILTER_PRICE_OPTIONS = [
   { value: 'between', label: 'Between $25 - $75' },
   { value: 'above', label: 'Above $75' },
 ];
-export const FILTER_COLOR_OPTIONS = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
-];
+
 
 // ----------------------------------------------------------------------
 
@@ -55,11 +49,13 @@ ShopFilterSidebar.propTypes = {
   onCloseFilter: PropTypes.func,
 };
 
-export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseFilter }) {
+export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseFilter,}) {
   return (
     <>
-      <Button disableRipple color="inherit" endIcon={<Iconify icon="ic:round-filter-list" />} onClick={onOpenFilter}>
-        Filters&nbsp;
+      <Button disableRipple variant='textInherit' endIcon={<FilterListIcon />} onClick={onOpenFilter}>
+        <Typography variant='subtitle1' component='span'>
+          Filters
+        </Typography>
       </Button>
 
       <Drawer
@@ -75,7 +71,7 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
             Filters
           </Typography>
           <IconButton onClick={onCloseFilter}>
-            <Iconify icon="eva:close-fill" width={20} height={20} />
+            <CloseIcon width={20} height={20} />
           </IconButton>
         </Stack>
 
@@ -85,10 +81,10 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
           <Stack spacing={3} sx={{ p: 3 }}>
             <div>
               <Typography variant="subtitle1" gutterBottom>
-                Gender
+                Diet
               </Typography>
               <FormGroup>
-                {FILTER_GENDER_OPTIONS.map((item) => (
+                {FILTER_DIET_OPTIONS.map((item) => (
                   <FormControlLabel key={item} control={<Checkbox />} label={item} />
                 ))}
               </FormGroup>
@@ -103,19 +99,6 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
                   <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                 ))}
               </RadioGroup>
-            </div>
-
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Colors
-              </Typography>
-              <ColorManyPicker
-                name="colors"
-                colors={FILTER_COLOR_OPTIONS}
-                // onChange={handleChange}
-                // onChecked={(color) => values.colors.includes(color)}
-                sx={{ maxWidth: 38 * 4 }}
-              />
             </div>
 
             <div>
@@ -170,9 +153,11 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
             type="submit"
             color="inherit"
             variant="outlined"
-            startIcon={<Iconify icon="ic:round-clear-all" />}
+            startIcon={<ClearAllIcon />}
           >
-            Clear All
+            <Typography variant='subtitle1'>
+              Clear All
+            </Typography>
           </Button>
         </Box>
       </Drawer>

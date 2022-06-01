@@ -1,5 +1,12 @@
+// import { Autocomplete } from '@mui/material
+
 // import parse from 'autosuggest-highlight/parse';
 // import match from 'autosuggest-highlight/match';
+// const PopperStyle = styled((props) => (
+//   <Popper placement='bottom-start' {...props} />
+// ))({
+//   width: '280px !important',
+// });
 {
   /* <Autocomplete
   options={top100Films}
