@@ -32,7 +32,6 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
 export const FILTER_DIET_OPTIONS = ['Dairy Free', 'Gluten Free', 'Ketogenic', 'low Fodmap', 'Vegan', 'Vegeterian', 'Very Healthy'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
@@ -90,16 +89,6 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
               </FormGroup>
             </div>
 
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Category
-              </Typography>
-              <RadioGroup>
-                {FILTER_CATEGORY_OPTIONS.map((item) => (
-                  <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
-                ))}
-              </RadioGroup>
-            </div>
 
             <div>
               <Typography variant="subtitle1" gutterBottom>
