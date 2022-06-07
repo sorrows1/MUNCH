@@ -38,13 +38,13 @@ app.use(cookieParser());
 
 app.use(session({
 	key: 'munchdb_session',
-	secret: 'tojiv',
+	secret: 'yjyyjjmyjm',
 	store: new MySQLStore({
-		host: db.host,
+		host: 'localhost',
 		port: 3306,
-		user: db.username,
-		password: db.password,
-		database: db.database,
+		user: 'munchuser',
+		password: 'password',
+		database: 'munchdb',
 		clearExpired: true,
 		checkExpirationInterval: 900000,
 		expiration: 900000,
@@ -68,7 +68,7 @@ app.use(function (req, res, next) {
 });
 
 const {formatDate, radioCheck, replaceCommas} = require('./helpers/hbs');
-const { removeRecipes } = require('./helper/updateProduct.helper');
+
 
 app.engine('handlebars', exphbs.engine({
 	helpers: {
