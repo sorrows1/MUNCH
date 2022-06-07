@@ -1,58 +1,121 @@
-<h1>Update Promotion Form</h1>
+<form action="/saveEditedPromotion/{{promotion.id}}?_method=PUT" method="post" id="addPromotionForm">
 
-<form action="/saveEditedPromotion/{{promotion.id}}?_method=PUT" method="post" id="addPromotion">
+    <
+
+    <legend>
+        <center>
+            <h2><b>Edit Promotion Form</b></h2>
+        </center>
+    </legend><br>
 
     <div class="form-group">
-        <label>Promotion Name: </label>
-        <input type="text" name="PromotionName" id="PromotionName" required value="{{promotion.PromotionName}}">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Name </label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionName" placeholder="Promotion Name" class="form-control" type="text"
+                    id="PromotionName" value="{{promotion.PromotionName}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>Requirements: </label>
-        <input type="text" name="EmailLimit" id="EmailLimit" value="{{promotion.EmailLimit}}">
-        <input type="number" name="RedemptionPerPerson" id="RedemptionPerPerson"  min="1" value="{{promotion.RedemptionPerPerson}}">
-        <input type="number" name="TotalRedemption" id="TotalRedemption"  min="1" value="{{promotion.TotalRedemption}}">
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Limit Users</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="EmailLimit" placeholder="" class="form-control" type="text"
+                    id="EmailLimit" value="{{promotion.EmailLimit}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>Promotion Amount: </label>
-        <input type="number" name="PromotionAmount" id="PromotionAmount" required  min="1" max="100" value="{{promotion.PromotionAmount}}">
-        {{!-- Consider being able to put it to percentage --}}
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Redemption Per Person</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="RedemptionPerPerson" placeholder="Redemption Per Person" class="form-control" type="number"
+                    id="RedemptionPerPerson" min="1" value="{{promotion.RedemptionPerPerson}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>Promotion Code: </label>
-        <input type="text" name="PromotionCode" id="PromotionCode" required value="{{promotion.PromotionCode}}">
-        {{!-- Can add the checker to make sure is unique or is if previous is not in use --}}
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Total Redemption</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="TotalRedemption" placeholder="Total Redemption" class="form-control" type="number"
+                    id="TotalRedemption" min="1" value="{{promotion.TotalRedemption}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>Purpose: </label>
-        <textarea name="Purpose" id="Purpose" cols="30" rows="10">{{promotion.Purpose}}</textarea>
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Amount </label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionAmount" placeholder="Promotion Amount" class="form-control" type="number"
+                    id="PromotionAmount" min="0" value="{{promotion.PromotionAmount}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>Start of Promotion: </label>
-        <input name="StartOfPromotion" id="StartOfPromotion" readonly value="{{formatDate promotion.StartOfPromotion 'DD/MM/YYYY'}}">
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Code</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionCode" placeholder="Promotion Code" class="form-control" type="text"
+                    id="PromotionCode" value="{{promotion.PromotionCode}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label>End of Promotion: </label>
-        <input name="EndOfPromotion" id="EndOfPromotion" readonly value="{{formatDate promotion.EndOfPromotion 'DD/MM/YYYY'}}">
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Purpose</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                
+                <textarea name="Purpose" placeholder="Purpose" id="Purpose" cols="30" rows="10">{{promotion.Purpose}}</textarea>
+            </div>
+        </div>
     </div>
 
-    <br>
-    <button id="butAddVideo" type="submit" class="btn btn-primary">Save
-    </button>
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Start Date</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="StartOfPromotion" placeholder="StartOfPromotion" class="form-control" type="date"
+                    id="StartOfPromotion" value="{{promotion.StartOfPromotion}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">End Date</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="EndOfPromotion" placeholder="EndOfPromotion" class="form-control" type="date"
+                    id="EndOfPromotion" value="{{promotion.EndOfPromotion}}">
+            </div>
+        </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label"></label>
+        <div class="col-md-4"><br>
+            <button type="submit" class="btn btn-warning" id="butAddPromotion">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </button>
+        </div>
+    </div>
+
 </form>
 
-<script>
-	$('#StartOfPromotion').datepicker({
-		format: 'dd/mm/yyyy',
-		uiLibrary: 'bootstrap4',
-	});
-    $('#EndOfPromotion').datepicker({
-		format: 'dd/mm/yyyy',
-		uiLibrary: 'bootstrap4',
-	});
-</script>
