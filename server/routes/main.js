@@ -105,7 +105,7 @@ router.post('/createPromotions', (req, res) => {
 				Promotion.create({ PromotionName, EmailLimit, RedemptionPerPerson, TotalRedemption, PromotionAmount, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion, ValidPromo })
 					.then(promotion => {
 						alertMessage(res, 'success', promotion.PromotionName, 'fas fa-sign-in-alt', true);
-						res.redirect('/test')
+						res.redirect('/listPromotion')
 					})
 
 			}
@@ -151,8 +151,6 @@ router.get('/updatePromotions/:id', (req, res) => {
 	}).catch(err => console.log(err));
 });
 
-
-
 router.put('/saveEditedPromotion/:id', (req, res) => {
 
 	let Purpose = req.body.Purpose.slice(0, 1999);
@@ -170,5 +168,25 @@ router.put('/saveEditedPromotion/:id', (req, res) => {
 	}).catch(err => console.log(err))
 });
 
+router.get('/deletePromotion/:id', (req, res) => {
+    Promotion.findOne({
+        where:{
+            id: req.params.id
+        }
+    }).then((promotion) => {
+        let promotionName = promotion.PromotionName // to store the video title to display in success message
+        // Only authorised user who is owner of video can delete it
+
+		Promotion.destroy({ //delete the video
+			where: {
+				id: req.params.id
+			}
+		}).then(() => { //Re-direct to the video list page with the appropriate success message
+			alertMessage(res, 'success', promotionName + ' promotion deleted', 'far fa-trash-alt', true);
+			res.redirect('/listPromotion');
+		})
+      
+    }).catch(err => console.log(err)); // To catch no video ID
+});
 
 module.exports = router;

@@ -11856,6 +11856,13 @@
                                             Edit
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="/deletePromotion/{{id}}" class="card-link" data-toggle="confirmation"
+                                            data-title="Confirm delete?">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Delete
+                                        </a>
+                                    </td>
                                 </tr>
                                 {{/each}}
 
@@ -11867,7 +11874,7 @@
         </div>
     </section>
     {{else}}
-    <h3>No videos jotted</h3>
+    <h3>No Promotions Created</h3>
     {{/if}}
 
     {{!-- {{#if promotion}}
