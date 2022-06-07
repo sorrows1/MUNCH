@@ -16,6 +16,7 @@ const mainRoute = require('./routes/main');
 
 const productRoute = require('./routes/product/product.route');
 const ingredientRoute = require('./routes/product/ingredient.route');
+const userRoute = require('./routes/user');
 
 const app = express();
 
@@ -82,6 +83,7 @@ app.engine('handlebars', exphbs.engine({
 app.use('/', mainRoute)
 app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
+app.use('/user', userRoute);
 
 
 module.exports = app;
