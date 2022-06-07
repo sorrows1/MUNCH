@@ -226,3 +226,59 @@ $(document).ready(function () {
 		});
 });
 
+
+$('#profilePicUpload').on('change', function () {
+    let image = $('#profilePicUpload')[0].files[0];
+    let formdata = new FormData();
+    formdata.append('profilePicUpload', image);
+    $.ajax({
+        url: '/user/upload',
+        type: 'POST',
+        data: formdata,
+        contentType: false,
+        processData: false,
+        'success': (data) => {
+            $('#profilePic').attr('src', data.file);
+            $('#profilePicURL').attr('value', data.file);   // sets posterURL hidden field
+            if (data.err) {
+                $('#profilePicErr').show();
+                console.log(data.err)
+                $('#profilePicErr').text(data.err.message);
+            } else {
+                $('#profilePicErr').hide();
+            }
+        }
+    });
+});
+
+
+function getOneMapAddress() {
+    const search = document.getElementById("zipcode").value;
+    if (String(parseInt(search)).length == 6 && search.length == 6) {
+        $('#codeErr').hide();
+        $.ajax({
+            url: 'https://developers.onemap.sg/commonapi/search?searchVal=' + search + '&returnGeom=N&getAddrDetails=Y&pageNum=1',
+            success: function (result) {
+                if (result['found'] != 0) {
+                    $('#oneMapErr').hide();
+                    document.getElementById('submitId').disabled = false;
+                    //Set result to a variable for writing
+                    var TrueResult;
+                    var blkNo = JSON.stringify(result['results'][0]['BLK_NO']);
+                    var roadName = JSON.stringify(result['results'][0]['ROAD_NAME']);
+                    TrueResult = blkNo.slice(1, -1) + ' ' + roadName.slice(1, -1)
+                    console.log(TrueResult);
+                    document.getElementById("address").value = (TrueResult);
+                } else {
+                    $('#oneMapErr').show();
+                    document.getElementById('submitId').disabled = true;
+                    document.getElementById("address").value = '';
+                }
+            }
+        });
+    } else {
+        $('#codeErr').show();
+        document.getElementById('submitId').disabled = true;
+        document.getElementById("address").value = '';
+    }
+}
