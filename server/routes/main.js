@@ -138,9 +138,15 @@ router.get('/updatePromotions/:id', (req, res) => {
 			id: req.params.id
 		}
 	}).then((promotion) => {
+		console.log(promotion)
+
+		const startDate = formatDate(promotion.StartOfPromotion)
+		const endDate = formatDate(promotion.EndOfPromotion)
 
 		res.render('editPromotion', {
-			promotion
+			promotion,
+			startDate: startDate,
+			endDate: endDate
 		});
 	}).catch(err => console.log(err));
 });
@@ -150,14 +156,11 @@ router.get('/updatePromotions/:id', (req, res) => {
 router.put('/saveEditedPromotion/:id', (req, res) => {
 
 	let Purpose = req.body.Purpose.slice(0, 1999);
-	let StartOfPromotion = moment(req.body.StartOfPromotion, 'DD/MM/YYYY')
-	let EndOfPromotion = moment(req.body.EndOfPromotion, 'DD/MM/YYYY')
+
 
 	Promotion.update({
 		...req.body,
 		Purpose,
-		StartOfPromotion,
-		EndOfPromotion
 	}, {
 		where: {
 			id: req.params.id
