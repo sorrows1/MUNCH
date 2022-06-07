@@ -56,17 +56,17 @@ router.get('/test', (req, res) => {
 // Assignment Test Codes
 
 function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+	var d = new Date(date),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+	if (month.length < 2)
+		month = '0' + month;
+	if (day.length < 2)
+		day = '0' + day;
 
-    return [year, month, day].join('-');
+	return [year, month, day].join('-');
 }
 
 router.get('/CreatePromotion', (req, res) => {
@@ -92,16 +92,16 @@ router.post('/createPromotions', (req, res) => {
 
 	ValidPromo = 'TRUE';
 
-	Promotion.findOne({ where:{PromotionCode:PromotionCode} })
+	Promotion.findOne({ where: { PromotionCode: PromotionCode } })
 		.then(promotion => {
 			if (promotion) {
-				res.render('CreatePromotion',{
+				res.render('CreatePromotion', {
 					error: promotion.PromotionCode + ' already registered',
 					...req.body
 				})
 			}
 			else {
-				
+
 				Promotion.create({ PromotionName, EmailLimit, RedemptionPerPerson, TotalRedemption, PromotionAmount, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion, ValidPromo })
 					.then(promotion => {
 						alertMessage(res, 'success', promotion.PromotionName, 'fas fa-sign-in-alt', true);
@@ -112,7 +112,7 @@ router.post('/createPromotions', (req, res) => {
 		})
 
 
-	
+
 });
 
 router.get('/listPromotion', (req, res) => {
@@ -138,10 +138,11 @@ router.get('/updatePromotions/:id', (req, res) => {
 			id: req.params.id
 		}
 	}).then((promotion) => {
+
 		res.render('editPromotion', {
 			promotion
-		})
-	})
+		});
+	}).catch(err => console.log(err));
 });
 
 
