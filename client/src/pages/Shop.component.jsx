@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import { Stack} from '@mui/material';
+import { useState} from 'react';
+import { useSelector} from 'react-redux'
 
+import { Stack } from '@mui/material';
 
 import Section from '../components/Section.component';
 import { ProductFilterSidebar, ProductSort, ProductSearchBar, ProductShop } from '../components/shop';
+
+import { selectProducts } from '../app/products/products.selector';
 import useResponsive from '../hooks/useResponsive';
 
 const products = [
@@ -695,6 +698,9 @@ const products = [
 ]
 
 const Shop = ({sx}) => {
+
+    // const products = useSelector(selectProducts)
+    
     const [ isOpenFilter, setIsOpenFilter ] = useState(false);
 
     const onOpenFilter = () => {

@@ -1,12 +1,12 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
+import { useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -20,19 +20,16 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 // components
 import Scrollbar from '../../components/ScrollBar.component';
-import { ProductListHead, ProductListToolbar, ProductMoreMenu } from '../../components/dashboard/product';
-// mock
-const PRODUCT_LIST = [
-    {}
-]
+import { TableListHead, TableListToolbar, TableMoreMenu } from '../../components/dashboard/table';
+
+import { selectProducts } from '../../app/products/products.selector';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'title', label: 'Product Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: 'active', label: 'Status', alignRight: false },
+  { id: 'price', label: 'Price', alignRight: false },
   { id: '' },
 ];
 
@@ -67,7 +64,9 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function ProductList() {
+  const products = useSelector(selectProducts)
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -88,7 +87,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = PRODUCT_LIST.map((n) => n.name);
+      const newSelecteds = products.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -100,11 +99,14 @@ export default function User() {
     let newSelected = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
+    }  
+    if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
+    }  
+    if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
+    }  
+    if (selectedIndex > 0) {
       newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
     setSelected(newSelected);
@@ -123,17 +125,17 @@ export default function User() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - PRODUCT_LIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - products.length) : 0;
 
-  const filteredUsers = applySortFilter(PRODUCT_LIST, getComparator(order, orderBy), filterName);
+  const filteredProducts = applySortFilter(products, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isProductNotFound = filteredProducts.length === 0;
 
   return (
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Product
+            Product List
           </Typography>
           <Button variant="contained" component={RouterLink} to="#" startIcon={<AddIcon />}>
             New Product
@@ -141,24 +143,24 @@ export default function User() {
         </Stack>
 
         <Card>
-          <ProductListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          <TableListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <ProductListHead
+                <TableListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={PRODUCT_LIST.length}
+                  rowCount={products.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                  {filteredProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const { id, title, createdAt, active, price } = row;
+                    const isItemSelected = selected.indexOf(title) !== -1;
 
                     return (
                       <TableRow
@@ -170,25 +172,21 @@ export default function User() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, title)} />
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
+                            <p>hi</p>
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {title}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">
-                              {status}
-                        </TableCell>
-
+                        <TableCell align="left">{createdAt}</TableCell>
+                        <TableCell align="left">{active ? 'Active' : 'No'}</TableCell>
+                        <TableCell align="left">{price}</TableCell>
                         <TableCell align="right">
-                          <ProductMoreMenu />
+                          <TableMoreMenu />
                         </TableCell>
                       </TableRow>
                     );
@@ -200,7 +198,7 @@ export default function User() {
                   )}
                 </TableBody>
 
-                {isUserNotFound && (
+                {isProductNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -216,7 +214,7 @@ export default function User() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={PRODUCT_LIST.length}
+            count={products.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

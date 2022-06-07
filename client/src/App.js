@@ -1,12 +1,23 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+
+import { getProductAll } from './app/products/products.action';
+
 import { Navigation } from './routes/Navigation.component';
 import Home from './pages/Home.component';
 import Shop from './pages/Shop.component';
 import Product from './pages/Product.component';
-import ProductList from './pages/dashboard/ProductList.component'
+import ProductList from './pages/dashboard/ProductList.component';
 import DashboardLayout from './components/dashboard';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProductAll());
+    // eslint-disable-next-line
+  }, []);
+  
   return (
     <>
       <Routes>

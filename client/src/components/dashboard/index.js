@@ -9,8 +9,8 @@ import useResponsive from '../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
-const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 92;
+const APP_BAR_MOBILE = 50;
+const APP_BAR_DESKTOP = 32;
 
 const RootStyle = styled('div')({
   display: 'flex',
@@ -37,11 +37,11 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
   const openSidebar = () => setOpen(true)
   const closeSidebar = () => setOpen(false)
-  const isDesktop = useResponsive('down', 'lg')
+  const isDesktop = useResponsive('up', 'lg')
 
   return (
     <RootStyle>
-      {isDesktop && <DashboardNavbar onOpenSidebar={openSidebar} />}
+      {!isDesktop && <DashboardNavbar onOpenSidebar={openSidebar} />}
       <DashboardSidebar isOpenSidebar={open} onCloseSidebar={closeSidebar} />
       <MainStyle>
         <Outlet />

@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FilterListIcon from '@mui/icons-material/FilterList';
 // component
 
@@ -68,7 +68,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <DeleteIcon sx={{height: 20, width: 20}} />
+            <DeleteOutlineIcon color='primary' sx={{height: 24, width: 24}} />
           </IconButton>
         </Tooltip>
       ) : (
