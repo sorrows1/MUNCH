@@ -26,7 +26,15 @@ const {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll({ include: Type });
+    const products = await Product.findAll({
+      include: [
+        { model: Type,
+          through: {
+            attributes: [],
+          }
+        }
+      ],
+    });
     res.status(200).json(products);
   } catch (err) {
     res

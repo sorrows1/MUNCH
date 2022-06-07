@@ -1,0 +1,120 @@
+
+
+<form action="/createPromotions" method="post" id="addPromotionForm">
+
+    <legend>
+        <center>
+            <h2><b>Create Promotion Form</b></h2>
+        </center>
+    </legend><br>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Name </label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionName" placeholder="Promotion Name" class="form-control" type="text"
+                    id="PromotionName">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Limit Users</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="EmailLimit" placeholder="" class="form-control" type="text"
+                    id="EmailLimit">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Redemption Per Person</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="RedemptionPerPerson" placeholder="Redemption Per Person" class="form-control" type="number"
+                    id="RedemptionPerPerson" min="1">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Total Redemption</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="TotalRedemption" placeholder="Total Redemption" class="form-control" type="number"
+                    id="TotalRedemption" min="1">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Amount </label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionAmount" placeholder="Promotion Amount" class="form-control" type="number"
+                    id="PromotionAmount" min="0">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Promotion Code</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="PromotionCode" placeholder="Promotion Code" class="form-control" type="text"
+                    id="PromotionCode">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Purpose</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                
+                <textarea name="Purpose" placeholder="Purpose" id="Purpose" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">Start Date</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="StartOfPromotion" placeholder="StartOfPromotion" class="form-control" type="date"
+                    id="StartOfPromotion" value="{{defaultStartDate}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label">End Date</label>
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                <input name="EndOfPromotion" placeholder="EndOfPromotion" class="form-control" type="date"
+                    id="EndOfPromotion" value="{{endDate}}">
+            </div>
+        </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+        <label class="col-md-4 col-lg-12 control-label"></label>
+        <div class="col-md-4"><br>
+            <button type="submit" class="btn btn-warning" id="butAddPromotion">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </button>
+        </div>
+    </div>
+
+</form>
