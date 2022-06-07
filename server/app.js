@@ -35,8 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
 app.use(cookieParser());
+
 app.use(session({
-	key: 'vidjot_session',
+	key: 'munchdb_session',
 	secret: 'tojiv',
 	store: new MySQLStore({
 		host: db.host,
