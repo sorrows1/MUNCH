@@ -18,11 +18,12 @@ const {
   removeProductTypes,
 } = require('../../helper/updateProduct.helper');
 
-// exports.checkID = (req, res, next, val) => {
-//   if (+val > 10)
-//     return res.status(400).json({ status: 'fail', message: 'Invalid Id' });
-//   next();
-// };
+exports.checkID = async (req, res, next, val) => {
+  const product = await Product.findByPk(+val)
+  if (!product.length)
+    return res.status(400).json({ status: 'fail', message: 'Invalid Id' });
+  next();
+};
 
 exports.getAllProducts = async (req, res) => {
   try {
@@ -97,7 +98,7 @@ exports.createProduct = async (req, res) => {
       ProductType.bulkCreate(newTypes),
     ]);
 
-    res.status(201).json({ status: 'ok', message: 'success' });
+    res.status(201).json({ ...product.dataValues, types });
   } catch (err) {
     res.status(500).json({
       status: 'fail',
