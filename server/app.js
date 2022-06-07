@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
 const passport = require('passport');
-const db = require('./config/config.json')
 
 const mainRoute = require('./routes/main');
 
@@ -23,8 +22,8 @@ const app = express();
 
 const MySQLStore = require('express-mysql-session');
 
-// const authenticate = require('./config/passport');
-// authenticate.localStrategy(passport);
+const authenticate = require('./config/passport');
+authenticate.localStrategy(passport);
 
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded({extended: false}))
@@ -54,8 +53,8 @@ app.use(session({
 	saveUninitialized: false,
 }));
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 app.use(FlashMessenger.middleware);
