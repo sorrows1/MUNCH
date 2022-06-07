@@ -304,7 +304,7 @@ router.post('/:userId/updateAddress',(req, res) => {
 
 function sendEmail(userId, email, token) {
     sgMail.setApiKey('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');
-    let verifyURL = 'http://localhost:4000/user/verify/' + userId + '/' + token;
+    let verifyURL = 'http://localhost:5000/user/verify/' + userId + '/' + token;
 
     const message = {
         to: email,
