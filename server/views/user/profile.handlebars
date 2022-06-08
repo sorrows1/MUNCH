@@ -118,14 +118,14 @@
                                     <tr>
                                         <td>
                                             <button id="updatePassword" class="btn btn-warning" type="button"
-                                                onclick="window.location='http://localhost:4000/user/{{user.id}}/updatePassword'">
+                                                onclick="window.location='http://localhost:5000/user/{{user.id}}/updatePassword'">
                                                 Update Password
                                             </button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <form action="" method="POST">
+                                            <form action="/user/{{user.id}}/delete" method="POST">
                                                 <!-- submit to delete here -->
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
                                                     data-target="#myModal">
@@ -254,7 +254,7 @@
                                     <hr />
                                     <div class="d-grid gap-2 text-center">
                                         <button id="updateDiet" class="btn btn-success" type="button"
-                                            onclick="window.location='http://localhost:4000/user/{{user.id}}/updateDiet'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateDiet'">
                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                             &nbsp;Update Dietary Requirements
                                         </button>
@@ -294,33 +294,15 @@
                                     <hr />
                                     <div class="d-grid gap-2 text-center">
                                         <button class="btn btn-success" type="button"
-                                            onclick="window.location='http://localhost:4000/user/{{user.id}}/updateAddress'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateAddress'">
                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                             &nbsp;Update address
                                         </button>
                                     </div>
                                     {{else}}
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Zip code</label>
-                                        </div>
-                                        <div class="col-md-8 col-6" id="zipcode">
-                                            570257
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Postal Address</label>
-                                        </div>
-                                        <div class="col-md-8 col-6" id="address">
-
-                                        </div>
-                                    </div>
-                                    <hr />
                                     <div class="d-grid gap-2 text-center">
                                         <button class="btn btn-primary" type="button"
-                                            onclick="window.location='http://localhost:4000/user/{{user.id}}/updateAddress'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateAddress'">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             &nbsp;Add address
                                         </button>

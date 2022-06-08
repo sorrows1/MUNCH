@@ -3,6 +3,7 @@ const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
 
+
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
@@ -16,6 +17,7 @@ const mainRoute = require('./routes/main');
 const productRoute = require('./routes/product/product.route');
 const ingredientRoute = require('./routes/product/ingredient.route');
 const userRoute = require('./routes/user');
+const promotionRoute = require('./routes/promotion');
 
 const app = express();
 
@@ -68,6 +70,7 @@ app.use(function (req, res, next) {
 });
 
 const {formatDate, radioCheck, replaceCommas} = require('./helpers/hbs');
+const Promotion = require('./models/Promotion');
 
 
 app.engine('handlebars', exphbs.engine({
@@ -84,6 +87,7 @@ app.use('/', mainRoute)
 app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
 app.use('/user', userRoute);
+app.use('/promotion', promotionRoute);
 
 
 module.exports = app;
