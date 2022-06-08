@@ -362,7 +362,7 @@ router.post('/:userId/delete', (req, res) => {
 })
 
 function sendEmail(userId, email, token) {
-    sgMail.setApiKey('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');
+    sgMail.setApiKey('no');
     let verifyURL = 'http://localhost:5000/user/verify/' + userId + '/' + token;
 
     const message = {
