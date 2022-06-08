@@ -3,10 +3,78 @@ const req = require('express/lib/request');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger');
 const Promotion = require('../models/Promotion');
+const schedule = require('node-schedule');
+
 
 const moment = require('moment');
 
 // Assignment Test Codes
+
+schedule.scheduleJob({hour: 00, minute: 01}, () => {
+
+	console.log("DOg sofjpihugdkhjbfnjkleiwrhugdfbskleiforuhkgjbsfkihbgdskuhbsfekhbvdfnm")
+
+	const dateCheck = (from, to, check) => {
+		let fDate, lDate, cDate;
+		fDate = Date.parse(from);
+		lDate = Date.parse(to);
+		cDate = Date.parse(check);
+		if ((cDate <= lDate && cDate >= fDate)) return true
+		return false;
+	}
+	// console.log(dateCheck("02/05/2021", "02/09/2021", "02/01/2021"));
+
+	Promotion.findAll({
+
+	})
+		.then((promotion) => {
+
+			if (promotion) {
+
+				const today = new Date();
+
+				for (let i = 0; i < promotion.length; i++) {
+
+					if (dateCheck(promotion[i].StartOfPromotion, promotion[i].EndOfPromotion, today)) {
+
+						if (promotion[i].ValidPromo == "FALSE") {
+							const ValidPromo = "TRUE";
+
+							Promotion.update({
+								ValidPromo
+							}, {
+								where: {
+									id: promotion[i].id
+								}
+							}).then((promotion) => {
+
+							}).catch(err => console.log(err))
+						}
+
+					} else if (promotion[i].ValidPromo == "TRUE") {
+
+						const ValidPromo = "FALSE";
+
+						Promotion.update({
+							ValidPromo
+						}, {
+							where: {
+								id: promotion[i].id
+							}
+						}).then((promotion) => {
+
+						}).catch(err => console.log(err))
+					}
+					else {
+
+					}
+
+				}
+
+			}
+
+		})
+}) // run everyday at midnight
 
 function formatDate(date) {
 	var d = new Date(date),
@@ -47,14 +115,19 @@ router.post('/createPromotions', (req, res) => {
 
 	let { PromotionName, EmailLimit, PromotionAmount, RedemptionPerPerson, TotalRedemption, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion } = req.body;
 
-	ValidPromo = 'TRUE';
+	ValidPromo = 'FALSE';
 
 	Promotion.findOne({ where: { PromotionCode: PromotionCode } })
 		.then(promotion => {
 			if (promotion) {
+				const endDate = req.body.EndOfPromotion;
+				const defaultStartDate = req.body.StartOfPromotion;
+
 				res.render('promotion/CreatePromotion', {
 					error: promotion.PromotionCode + ' already registered',
-					...req.body
+					...req.body,
+					endDate,
+					defaultStartDate
 				})
 			}
 			else {
@@ -62,7 +135,7 @@ router.post('/createPromotions', (req, res) => {
 				Promotion.create({ PromotionName, EmailLimit, RedemptionPerPerson, TotalRedemption, PromotionAmount, PromotionCode, Purpose, StartOfPromotion, EndOfPromotion, ValidPromo })
 					.then(promotion => {
 						alertMessage(res, 'success', promotion.PromotionName, 'fas fa-sign-in-alt', true);
-						res.redirect('/promotion/listPromotion')
+						res.redirect('/promotion/checkValidity')
 					})
 
 			}
@@ -123,16 +196,17 @@ router.put('/saveEditedPromotion/:id', (req, res) => {
 	}).then((promotion) => {
 		res.redirect('/promotion/listPromotion')
 	}).catch(err => console.log(err))
+
 });
 
 router.get('/deletePromotion/:id', (req, res) => {
-    Promotion.findOne({
-        where:{
-            id: req.params.id
-        }
-    }).then((promotion) => {
-        let promotionName = promotion.PromotionName // to store the video title to display in success message
-        // Only authorised user who is owner of video can delete it
+	Promotion.findOne({
+		where: {
+			id: req.params.id
+		}
+	}).then((promotion) => {
+		let promotionName = promotion.PromotionName // to store the video title to display in success message
+		// Only authorised user who is owner of video can delete it
 
 		Promotion.destroy({ //delete the video
 			where: {
@@ -142,8 +216,74 @@ router.get('/deletePromotion/:id', (req, res) => {
 			alertMessage(res, 'success', promotionName + ' promotion deleted', 'far fa-trash-alt', true);
 			res.redirect('/promotion/listPromotion');
 		})
-      
-    }).catch(err => console.log(err)); // To catch no video ID
+
+	}).catch(err => console.log(err)); // To catch no video ID
+});
+
+router.get('/checkValidity', (req, res) => {
+
+	const dateCheck = (from, to, check) => {
+		let fDate, lDate, cDate;
+		fDate = Date.parse(from);
+		lDate = Date.parse(to);
+		cDate = Date.parse(check);
+		if ((cDate <= lDate && cDate >= fDate)) return true
+		return false;
+	}
+	// console.log(dateCheck("02/05/2021", "02/09/2021", "02/01/2021"));
+
+	Promotion.findAll({
+
+	})
+		.then((promotion) => {
+
+			if (promotion) {
+
+				const today = new Date();
+
+				for (let i = 0; i < promotion.length; i++) {
+
+					if (dateCheck(promotion[i].StartOfPromotion, promotion[i].EndOfPromotion, today)) {
+
+						if (promotion[i].ValidPromo == "FALSE") {
+							const ValidPromo = "TRUE";
+
+							Promotion.update({
+								ValidPromo
+							}, {
+								where: {
+									id: promotion[i].id
+								}
+							}).then((promotion) => {
+
+							}).catch(err => console.log(err))
+						}
+
+					} else if (promotion[i].ValidPromo == "TRUE") {
+
+						const ValidPromo = "FALSE";
+
+						Promotion.update({
+							ValidPromo
+						}, {
+							where: {
+								id: promotion[i].id
+							}
+						}).then((promotion) => {
+
+						}).catch(err => console.log(err))
+					}
+					else {
+
+					}
+
+				}
+
+			}
+
+		})
+
+	res.redirect('/promotion/listPromotion')
 });
 
 module.exports = router;

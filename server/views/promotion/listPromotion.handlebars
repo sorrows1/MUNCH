@@ -11812,7 +11812,7 @@
             font-size: 14px;
         }
     </style>
-
+    
     {{#if promotion}}
     <section class="ftco-section">
         <div class="container">
@@ -11821,6 +11821,7 @@
                     <h2 class="heading-section">Promotion Table</h2>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-wrap">
@@ -11876,6 +11877,27 @@
     {{else}}
     <h3>No Promotions Created</h3>
     {{/if}}
+
+    <a href="/promotion/checkValidity" class="" id="chechAvalabalityButton">Check Validity</a>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+<style>
+    #chechAvalabalityButton {
+        background-color: #199319;
+        color: white;
+        padding: 15px 25px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        margin-left: 900px;  
+    }
+</style>
 
     {{!-- {{#if promotion}}
     <div class="card card-body">
