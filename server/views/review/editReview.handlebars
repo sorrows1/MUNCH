@@ -1,0 +1,71 @@
+<h3>Edit your Reviews</h3>
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+<div class="container">
+    <div class="card card-body">
+        <h3>Add review </h3>
+        <form action="/review/saveEditedReview/{{review.id}}?_method=PUT" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form-group">
+                <label class="font-italic" for="title">What your review</label>
+                <input type="text" class="form-control" name="title" value="{{review.title}}" required>
+            </div>
+            <div class="form-group mb-4">
+                <label class="font-italic" for="story">What happen</label>
+                <textarea class="form-control" id="story" name="story" rows="7">{{review.story}}</textarea>
+            </div>
+            <div class="form-group">
+                <div class="row mb-2">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
+                        <label class="font-italic">Date of release</label>
+                        <input id="datepicker" width="200" name="dateRelease" readonly
+                            value="{{formatDate review.dateRelease 'DD/MM/YYYY'}}" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <label class="font-italic">Ratings from 1 to 5 ,5 being like it alot</label>
+                <br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="1" value="1" name="rating" >
+                    {{radioCheck review.rating "1" }}>
+                    <label class="form-check-label" for="1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="2" value="2" name="rating">
+                    {{radioCheck review.rating "2" }}>
+                    <label class="form-check-label" for="2">2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="3" value="3" name="rating">
+                    {{radioCheck review.rating "3" }}>
+                    <label class="form-check-label" for="3">3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="4" value="4" name="rating">
+                    {{radioCheck review.rating "4" }}>
+                    <label class="form-check-label" for="4">4</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="5" value="5" name="rating">
+                    {{radioCheck review.rating "5" }}>
+                    <label class="form-check-label" for="5">5</label>
+                </div>
+
+            </div>
+    </div>
+
+</div>
+<br>
+<button id="butAddreview" type="submit" class="btn btn-primary">Save
+</button>
+</form>
+</div>
+</div>
+
+<script>
+    $('#datepicker').datepicker({
+        value: new Date().toLocaleDateString('en-GB'),
+        format: 'dd/mm/yyyy',
+        uiLibrary: 'bootstrap4',
+    });
+</script>

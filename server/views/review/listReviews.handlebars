@@ -1,0 +1,52 @@
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+
+
+<div class="container">
+	{{#if reviews}}
+	<div class="card card-body">
+		<h3 class="text-primary">History of reviews</h3>
+		{{#each reviews}}
+		<p>{{reviews}}</p>
+		<div class="card border-primary mb-2 w-100 mx-auto">
+			<div class="card-header">
+				<h5 class="card-title">{{title}}</h5>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-12 col-lg-2">
+							<p class="font-italic">Rating</p>
+							<p class="text-info">{{rating}}/5</p>
+						</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic">Date Release</p>
+						<p class="text-info">{{formatDate dateRelease 'DD MMM YYYY'}}</p>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic">What happen</p>
+							<p class="text-info">
+							{{story}}
+							</p>
+						</div>
+					<div class="col-sm-12 col-md-12 col-lg-2">
+						<p class="font-italic"></p>
+						<a href="/review/edit/{{id}}" class="card-link">
+							<i class="fas fa-pencil-alt"></i>
+							Edit
+						</a>
+						<a href="/review/delete/{{id}}" class="card-link" data-toggle="confirmation"
+							data-title="Confirm delete?">
+							<i class="far fa-trash-alt"></i>
+							Delete
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+<h3>No reviews</h3>
+{{/if}}
