@@ -99,7 +99,7 @@ router.get('/CreatePromotion', (req, res) => {
 	const today = new Date();
 	let tommorow = new Date(today);
 	let endDate = new Date(today);
-	tommorow.setDate(tommorow.getDate() + 1);
+	tommorow.setDate(tommorow.getDate() + 0);
 	endDate.setDate(endDate.getDate() + 2);
 
 	tommorow = formatDate(tommorow);
