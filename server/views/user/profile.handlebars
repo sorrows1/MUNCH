@@ -7,11 +7,11 @@
                         <h1 style="font-weight: bold">User Profile</h1>
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
-                                {{#if user.imageURL}}
-                                <img src="{{user.imageURL}}" id="imgProfile" style="width: 150px; height: 150px"
+                                {{#if user.dataValues.imageURL}}
+                                <img src="{{user.dataValues.imageURL}}" id="imgProfile" style="width: 150px; height: 150px"
                                     class="img-thumbnail" />
                                 {{else}}
-                                <img src="/img/no-image.jpg" id="imgProfile" style="width: 150px; height: 150px"
+                                <img src="/img/logo.png" id="imgProfile" style="width: 150px; height: 150px"
                                     class="img-thumbnail" />
                                 {{/if}}
                             </div>
@@ -25,7 +25,7 @@
                                                     Profile Picture
                                                 </button>
 
-                                                {{#if user.imageURL}}
+                                                {{#if user.dataValues.imageURL}}
                                                 <!-- The Modal -->
                                                 <div class="modal" id="imgModal">
                                                     <div class="modal-dialog">
@@ -45,7 +45,7 @@
                                                                     id="profilePicUpload"
                                                                     accept="image/png, image/jpeg, image/jpg, image/gif">
                                                                 {{!-- Poster Image --}}
-                                                                <img id="profilePic" src="{{user.imageURL}}" alt=""
+                                                                <img id="profilePic" src="{{user.dataValues.imageURL}}" alt=""
                                                                     class="border img-thumbnail img-fluid"
                                                                     style="height: 150px;width:150px;">
 
@@ -118,7 +118,7 @@
                                     <tr>
                                         <td>
                                             <button id="updatePassword" class="btn btn-warning" type="button"
-                                                onclick="window.location='http://localhost:5000/user/{{user.id}}/updatePassword'">
+                                                onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updatePassword'">
                                                 Update Password
                                             </button>
                                         </td>
@@ -146,7 +146,7 @@
 
                                                             <!-- Modal body -->
                                                             <div class="modal-body">
-                                                                Are you sure you want to delete {{user.name}}?
+                                                                Are you sure you want to delete {{user.dataValues.name}}?
                                                             </div>
 
                                                             <!-- Modal footer -->
@@ -198,7 +198,7 @@
                                             <label style="font-weight:bold;">Full Name</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{user.name}}
+                                            {{user.dataValues.name}}
                                         </div>
                                     </div>
                                     <hr />
@@ -207,7 +207,7 @@
                                             <label style="font-weight:bold;">Email</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{user.email}}
+                                            {{user.dataValues.email}}
                                         </div>
                                     </div>
                                     <hr />
@@ -216,7 +216,7 @@
                                             <label style="font-weight:bold;">Gender</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{user.gender}}
+                                            {{user.dataValues.gender}}
                                         </div>
                                     </div>
                                     <hr />
@@ -225,7 +225,7 @@
                                             <label style="font-weight:bold;">Birthdate</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{formatDate user.birthday 'DD MMM YYYY'}}
+                                            {{formatDate user.dataValues.birthday 'DD MMM YYYY'}}
                                         </div>
                                     </div>
                                     <hr />
@@ -238,7 +238,7 @@
                                             <label style="font-weight:bold;">Food Intolerances</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{replaceCommas user.intolerances}}
+                                            {{replaceCommas user.dataValues.intolerances}}
                                         </div>
                                     </div>
                                     <hr />
@@ -248,13 +248,13 @@
                                             <label style="font-weight:bold;">Diet</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{user.diet}}
+                                            {{replaceCommas user.dataValues.diet}}
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="d-grid gap-2 text-center">
                                         <button id="updateDiet" class="btn btn-success" type="button"
-                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateDiet'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateDiet'">
                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                             &nbsp;Update Dietary Requirements
                                         </button>
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="tab-pane fade show inactive" id="addressInfo" role="tabpanel"
                                     aria-labelledby="addressInfo-tab">
-                                    {{#if user.zipCode}}
+                                    {{#if user.dataValues.zipCode}}
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Postal Address</label>
@@ -272,13 +272,13 @@
                                         </div>
                                     </div>
                                     <hr />
-                                    {{#if user.unitNo}}
+                                    {{#if user.dataValues.unitNo}}
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Unit No.</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{user.unitNo}}
+                                            {{user.dataValues.unitNo}}
                                         </div>
                                     </div>
                                     <hr />
@@ -288,13 +288,13 @@
                                             <label style="font-weight:bold;">Zip code</label>
                                         </div>
                                         <div class="col-md-8 col-6" id="zipcode">
-                                            {{user.zipCode}}
+                                            {{user.dataValues.zipCode}}
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="d-grid gap-2 text-center">
                                         <button class="btn btn-success" type="button"
-                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateAddress'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateAddress'">
                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                             &nbsp;Update address
                                         </button>
@@ -302,7 +302,7 @@
                                     {{else}}
                                     <div class="d-grid gap-2 text-center">
                                         <button class="btn btn-primary" type="button"
-                                            onclick="window.location='http://localhost:5000/user/{{user.id}}/updateAddress'">
+                                            onclick="window.location='http://localhost:5000/user/{{user.dataValues.id}}/updateAddress'">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             &nbsp;Add address
                                         </button>
@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="tab-pane fade show inactive" id="cardInfo" role="tabpanel"
                                     aria-labelledby="cardInfo-tab">
-                                    {{#if user.cardNum}}
+                                    {{#if user.dataValues.cardNum}}
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Credit Card Number</label>

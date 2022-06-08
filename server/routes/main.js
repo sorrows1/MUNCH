@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs'); // for password encryption
 const moment = require('moment');
 
 router.get('/', (req, res) => {
+	
 	User.findOne({ where: { role: 'admin' } })
 		.then((Admin) => {
 			if (!Admin) {
