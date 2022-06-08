@@ -10,7 +10,7 @@ const moment = require('moment');
 
 // Assignment Test Codes
 
-schedule.scheduleJob({hour: 00, minute: 01git }, () => {
+schedule.scheduleJob({hour: 00, minute: 01}, () => {
 
 	console.log("DOg sofjpihugdkhjbfnjkleiwrhugdfbskleiforuhkgjbsfkihbgdskuhbsfekhbvdfnm")
 
