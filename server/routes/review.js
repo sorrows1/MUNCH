@@ -9,7 +9,7 @@ const alertMessage = require('../helpers/messenger')
 router.get('/listReviews', (req, res) => {
     Review.findAll({
         where: {
-            userId: req.user.id
+            
         },
         order: [
             ['title', 'ASC']
