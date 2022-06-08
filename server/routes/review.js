@@ -26,7 +26,7 @@ router.get('/listReviews', (req, res) => {
 });
 
 //add new review
-router.get('/showAddReview',ensureAuthenticated, (req, res) => {
+router.get('/showAddReview', (req, res) => {
     res.render('review/addReviews');
 });
 module.exports = router;
@@ -52,7 +52,7 @@ router.post('/addReview', (req, res) => {
 });
 
 // Shows edit review page
-router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+router.get('/edit/:id', (req, res) => {
     Review.findOne({
         where: {
             id: req.params.id
@@ -95,7 +95,7 @@ router.put('/saveEditedReview/:id', (req, res) => {
 });
 
 
-router.get('/delete/:id', ensureAuthenticated, (req, res) => {
+router.get('/delete/:id', (req, res) => {
     Review.findOne({
         where: {
             id: req.params.id
