@@ -1,27 +1,37 @@
 const addProductIdToAttributes = (
   productId,
   ingredients,
-  nutrients,
+  // nutrients ,
   types
 ) => {
-  const addProductIdToRecipes = (productId, ingredients) =>
-    ingredients?.map((val) => {
+  // const addProductIdToRecipes = (productId, ingredients) =>
+  //   ingredients?.map((val) => {
+  //     return {
+  //       ...val,
+  //       ingredientId: val.id,
+  //       productId,
+  //     };
+  //   });
+
+  const addProductIdToTypes = (productId, arr) =>
+    arr?.map((val) => {
       return {
         ...val,
-        ingredientId: val.id,
+        typeId: val.id,
         productId,
       };
     });
 
-  const addProductId = (productId, arr) =>
-    arr?.map((val) => {
+  const addProductId = (productId, arr) =>{
+    return arr?.map((val) => {
       return { ...val, productId };
     });
+  }
 
-  const newRecipes = addProductIdToRecipes(productId, ingredients);
-  const newNutrients = addProductId(productId, nutrients);
-  const newTypes = addProductId(productId, types);
-  return { newRecipes, newNutrients, newTypes };
+  const newRecipes = addProductId(productId, ingredients);
+  // const newNutrients = addProductId(productId, nutrients);
+  const newTypes = addProductIdToTypes(productId, types);
+  return { newRecipes, newTypes };
 };
 
 module.exports = addProductIdToAttributes;
