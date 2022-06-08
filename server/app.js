@@ -18,6 +18,7 @@ const productRoute = require('./routes/product/product.route');
 const ingredientRoute = require('./routes/product/ingredient.route');
 const userRoute = require('./routes/user');
 const promotionRoute = require('./routes/promotion');
+const reviewRoute = require('./routes/review');
 
 const app = express();
 
@@ -88,6 +89,7 @@ app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
 app.use('/user', userRoute);
 app.use('/promotion', promotionRoute);
+app.use('/review', reviewRoute)
 
 
 module.exports = app;
