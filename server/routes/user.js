@@ -26,7 +26,6 @@ router.post('/register', (req, res) => {
     let email = req.body.email;
     let gender = req.body.gender;
     let birthdate = moment(req.body.birthdate, 'DD/MM/YYYY');
-    console.log(birthdate);
     let password = req.body.password;
     let password2 = req.body.password2;
     // Checks if both passwords entered are the same
@@ -106,7 +105,6 @@ router.post('/register', (req, res) => {
             });
     }
 });
-
 
 // Login Form POST => /user/login
 router.post('/login', (req, res, next) => {
@@ -253,14 +251,14 @@ router.get('/:userId/updateDiet', (req, res) => {
     })
 })
 
-router.post('/:userId/updateDiet',(req, res) => {
+router.post('/:userId/updateDiet', (req, res) => {
     let intolerances = req.body.intolerance === undefined ? '' : req.body.intolerance.toString();
     let diet = req.body.diet;
 
     User.update({
         intolerances,
         diet,
-    },{
+    }, {
         where: {
             id: req.params.userId
         }
@@ -285,14 +283,14 @@ router.get('/:userId/updateAddress', (req, res) => {
     })
 })
 
-router.post('/:userId/updateAddress',(req, res) => {
+router.post('/:userId/updateAddress', (req, res) => {
     let zipCode = req.body.zipcode === undefined ? '' : req.body.zipcode.toString();
     let unitNo = req.body.unitNo === undefined ? undefined : req.body.unitNo.toString();
 
     User.update({
         zipCode,
         unitNo,
-    },{
+    }, {
         where: {
             id: req.params.userId
         }
@@ -302,8 +300,69 @@ router.post('/:userId/updateAddress',(req, res) => {
     }).catch(err => console.log(err))
 });
 
+router.get('/:userId/updatePassword', (req, res) => {
+    res.render('user/updatePassword');
+});
+
+router.post('/:userId/updatePassword', (req, res) => {
+    let errors = [];
+    let newPassword = req.body.newPassword;
+    let newPassword2 = req.body.newPassword2;
+
+    // Checks if both passwords entered are the same
+    if (newPassword !== newPassword2) {
+        errors.push({ text: 'New Passwords do not match' });
+    }
+    // Checks that password length is more than 4
+    if (newPassword.length < 4) {
+        errors.push({ text: 'New Password must be at least 4 characters' });
+    }
+
+    if (errors.length > 0) {
+        res.render('user/updatePassword', {
+            errors,
+            newPassword,
+            newPassword2,
+        })
+    } else {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newPassword, salt, (err, hash) => {
+                if (err) throw err;
+
+                User.update({
+                    password: hash,
+                }, {
+                    where: { id: req.params.userId }
+                }).then((user) => {
+                    alertMessage(res, 'success', ' Password successfully updated', 'fa fa-check', true);
+                    res.redirect('/user/profile');
+                }).catch(err => console.log(err))
+            });
+        });
+    }
+})
+
+router.post('/:userId/delete', (req, res) => {
+    User.findOne({
+        where: {
+            id: req.params.userId,
+        }
+    }).then((user) => {
+        let userEmail = user.email;
+
+        user.destroy({
+            where: {
+                id: req.params.userId,
+            }
+        }).then(() => {
+            alertMessage(res, 'success', 'Account deleted for ' + userEmail, 'fas fa-trash-alt', true);
+            res.redirect('/');
+        })
+    })
+})
+
 function sendEmail(userId, email, token) {
-    sgMail.setApiKey('[INSERT API KEY HERE]');
+    sgMail.setApiKey('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');
     let verifyURL = 'http://localhost:4000/user/verify/' + userId + '/' + token;
 
     const message = {
