@@ -11,7 +11,7 @@ const ProductCard = ( {product} ) => {
     <Link to={`product/${id}`} underline='none' component={RouterLink}>
         <Card>
             <Box sx={{pt: '60%', position:'relative'}}>
-                <Image src={image} alt={title} effect='blur' sx={{top: 0, position: 'absolute'}} />
+                <Image src={`http://localhost:5000/uploads/${image}`} alt={title} effect='blur' sx={{top: 0, position: 'absolute'}} />
             </Box>
             <Stack padding={2.4} spacing={1.6} sx={{pb: 3.2 }}>
                 <TagPreview types={types} />

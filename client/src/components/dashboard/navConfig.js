@@ -11,7 +11,7 @@ const navConfig = [
         path: '/dashboard/product/list',
       },
       {
-        title: 'add product',
+        title: 'create',
         path: '/dashboard/product/new',
       },
     ],

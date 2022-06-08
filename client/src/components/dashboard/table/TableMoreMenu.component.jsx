@@ -1,18 +1,27 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
+import { removeProduct } from '../../../app/products/products.action';
 // component
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu() {
+export default function TableMoreMenu({id}) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useDispatch()
+
+  const handleDelete = () => {
+    dispatch(removeProduct(id))
+  }
 
   return (
     <>
@@ -30,10 +39,10 @@ export default function UserMoreMenu() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem sx={{ color: 'text.secondary' }}>
-          <ListItemIcon>
-            <DeleteIcon sx={{height: 24, width: 24}} />
-          </ListItemIcon>
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDelete}>
+            <ListItemIcon>
+                <DeleteIcon sx={{height: 24, width: 24}} />
+            </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
