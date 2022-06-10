@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 							name: 'Admin 1',
 							email: 'appdevproject9@gmail.com',
 							password,
+							dateJoined: moment().format('L'),
 							role: 'admin',
 							verified: 1,
 						})

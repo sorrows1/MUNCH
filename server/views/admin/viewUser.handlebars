@@ -1,0 +1,196 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <u><a href="/admin/listUsers"><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;Back</a></u>
+                    <br/><br/>  
+                    <div class="card-title mb-4">
+                        <h1 style="font-weight: bold">User Profile</h1>
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                {{#if User.imageURL}}
+                                <img src="{{User.imageURL}}" id="imgProfile" style="width: 150px; height: 150px"
+                                    class="img-thumbnail" />
+                                {{else}}
+                                <img src="/img/person-icon.png" id="imgProfile" style="width: 150px; height: 150px"
+                                    class="img-thumbnail" />
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4 text-center" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                        role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="dietReq-tab" data-toggle="tab" href="#dietReq" role="tab"
+                                        aria-controls="dietReq" aria-selected="false">Dietary Requirement</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="addressInfo-tab" data-toggle="tab" href="#addressInfo"
+                                        role="tab" aria-controls="addressInfo" aria-selected="false">Address Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="cardInfo-tab" data-toggle="tab" href="#cardInfo" role="tab"
+                                        aria-controls="cardInfo" aria-selected="false">Card Info</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                    aria-labelledby="basicInfo-tab">
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Full Name</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{User.name}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Email</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{User.email}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Gender</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{User.gender}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Birthdate</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{formatDate User.birthday 'DD MMM YYYY'}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="tab-pane fade show inactive" id="dietReq" role="tabpanel"
+                                    aria-labelledby="dietReq-tab">
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Food Intolerances</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{replaceCommas User.intolerances}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Diet</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{User.diet}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="tab-pane fade show inactive" id="addressInfo" role="tabpanel"
+                                    aria-labelledby="addressInfo-tab">
+                                    {{#if User.zipCode}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Postal Address</label>
+                                        </div>
+                                        <div class="col-md-8 col-6" id="address">
+
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{#if User.unitNo}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Unit No.</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{User.unitNo}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{/if}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Zip code</label>
+                                        </div>
+                                        <div class="col-md-8 col-6" id="zipcode">
+                                            {{User.zipCode}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{else}}
+                                    <div class="d-grid gap-2 text-center">
+                                        No Address Added
+                                    </div>
+                                    {{/if}}
+                                </div>
+                                <div class="tab-pane fade show inactive" id="cardInfo" role="tabpanel"
+                                    aria-labelledby="cardInfo-tab">
+                                    {{#if User.cardNum}}
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Credit Card Number</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            card num
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Expiry Date</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            exp date
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    {{else}}
+                                    <div class="d-grid gap-2 text-center">
+                                        No Card Added
+                                    </div>
+                                    {{/if}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        let search = document.getElementById("zipcode").innerHTML;
+        $.ajax({
+            url: 'https://developers.onemap.sg/commonapi/search?searchVal=' + search + '&returnGeom=N&getAddrDetails=Y&pageNum=1',
+            success: function (result) {
+                //Set result to a variable for writing
+                var TrueResult;
+                var blkNo = JSON.stringify(result['results'][0]['BLK_NO']);
+                var roadName = JSON.stringify(result['results'][0]['ROAD_NAME']);
+                TrueResult = blkNo.slice(1, -1) + ' ' + roadName.slice(1, -1)
+                document.getElementById("address").innerHTML = (TrueResult);
+            }
+        });
+    }
+</script>

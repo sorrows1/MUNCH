@@ -19,6 +19,7 @@ const ingredientRoute = require('./routes/product/ingredient.route');
 const userRoute = require('./routes/user');
 const promotionRoute = require('./routes/promotion');
 const reviewRoute = require('./routes/review');
+const adminRoute = require('./routes/admin');
 
 const app = express();
 
@@ -70,7 +71,7 @@ app.use(function (req, res, next) {
 	next();
 });
 
-const {formatDate, radioCheck, replaceCommas} = require('./helpers/hbs');
+const {formatDate, radioCheck, replaceCommas, checkAdmin, checkCustomer, math ,ifEquals, } = require('./helpers/hbs');
 const Promotion = require('./models/Promotion');
 
 
@@ -78,7 +79,11 @@ app.engine('handlebars', exphbs.engine({
 	helpers: {
 		formatDate: formatDate,
 		radioCheck: radioCheck,
-		replaceCommas: replaceCommas
+		replaceCommas: replaceCommas,
+		checkAdmin: checkAdmin,
+		checkCustomer: checkCustomer,
+		math: math,
+		ifEquals: ifEquals,
 	},
 	defaultLayout: 'main' 
 }));
@@ -89,7 +94,8 @@ app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
 app.use('/user', userRoute);
 app.use('/promotion', promotionRoute);
-app.use('/review', reviewRoute)
+app.use('/review', reviewRoute);
+app.use('/admin', adminRoute);
 
 
 module.exports = app;
