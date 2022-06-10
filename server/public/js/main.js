@@ -171,6 +171,7 @@ $(document).ready(function () {
 							}
 
 							const today = new Date();
+							today.setDate(today.getDate()  - 1);
 
 							console.log(EndOfPromotion.value)
 
