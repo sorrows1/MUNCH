@@ -50,12 +50,32 @@ const validationSchema = yup.object({
 });
 
 const testing = [
-  {id: 1, types: 'idodipao'},
-  {id: 2, types: 'sisji'},
-  {id: 3, types: '2i03'}
+  {id: 1, name: 'dairyFree'},
+  {id: 2, name: 'glutenFree'},
+  {id: 3, name: 'ketogenic'},
+  {id: 4, name: 'lowFodmap'},
+  {id: 5, name: 'vegan'},
+  {id: 6, name: 'vegeterian'},
+  {id: 7, name: 'veryHealthy'},
 ]
-
 const ingredientsTesting = [
+  
+    {
+        "ingredientId": 15260,
+        "ingredient": "canned salmon"
+    },
+    {
+        "ingredientId": 15076,
+        "ingredient": "grilled salmon"
+    },
+    {
+        "ingredientId": 15072,
+        "ingredient": "salmon caviar"
+    },
+    {
+        "ingredientId": 10015076,
+        "ingredient": "salmon steaks"
+    },
     {
         "ingredientId": 1103,
         "ingredient": "1 percent chocolate milk"
@@ -741,7 +761,8 @@ const CreateProduct = () => {
                 value={formik.values.types}
                 onChange={handleTypesChange}
                 options={testing}
-                getOptionLabel={(option) => option.types}
+                getOptionLabel={(option) => option.name}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 filterSelectedOptions
                 renderInput={(params) => (
                   <TextField

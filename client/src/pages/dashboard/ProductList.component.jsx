@@ -194,7 +194,7 @@ export default function ProductList() {
                             </Link>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{createdAt}</TableCell>
+                        <TableCell align="left">{createdAt.substring(0, 10)}</TableCell>
                         <TableCell align="left">{active ? 'Active' : 'No'}</TableCell>
                         <TableCell align="left">{price}</TableCell>
                         <TableCell align="right">

@@ -26,11 +26,22 @@ export const getProduct = createAsyncThunk(
   }
 )
 
+export const updateProduct = createAsyncThunk(
+  'product/updateProduct',
+  async (id, product) => {
+    try{
+      const response = await axios.patch(`${BASE_URL}/products/${id}`, product)
+      return response.data
+    } catch(err) {
+      return err
+    }
+  }
+)
+
 export const createProduct = createAsyncThunk(
   'product/createProduct',
   async (product) => {
     try {
-      console.log(product)
       const response = await axios.post(`${BASE_URL}/products`, product, {
       });
       return response.data;

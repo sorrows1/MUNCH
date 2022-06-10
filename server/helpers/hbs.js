@@ -13,7 +13,7 @@ module.exports = {
     },
 
     replaceCommas: function(str){
-        if (str != null || str.length !== 0) { //check for null & empty string
+        if (str != null) { //check for null & empty string
             if (str.trim().length !== 0) {
                 // Replace the ',' to '|'. Use pattern-matching string /,/g for ','
                 return str.replace(/,/g, ' | ');

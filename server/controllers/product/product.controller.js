@@ -114,10 +114,8 @@ exports.updateProduct = async (req, res) => {
     const { id } = req.params;
     const { ingredients, types } = req.body;
 
-    const result = await Product.destroy({where: {id}})
-    if (!result) throw new Error(`Product ${id} does not exists!`);
 
-    await Product.create({...req.body, id});
+    await Product.create({...req.body, id, image: req.file.originalname});
 
     const { newRecipes,  newTypes } = addProductIdToAttributes(
       id,
@@ -130,6 +128,7 @@ exports.updateProduct = async (req, res) => {
       Recipe.bulkCreate(newRecipes),
       ProductType.bulkCreate(newTypes),
     ]);
+
 
     res
       .status(200)

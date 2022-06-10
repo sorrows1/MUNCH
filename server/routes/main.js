@@ -31,8 +31,12 @@ router.get('/', (req, res) => {
 				})
 			}
 		})
+
+	if (req.user.id) {
+		return res.render('user/profile')
+	}
 	const title = 'Video Jotter';
-	res.render('index', { title: title }) // renders views/index.handlebars
+	res.redirect('http://localhost:3000/')
 });
 
 // User Login Route

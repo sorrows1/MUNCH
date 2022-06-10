@@ -1,56 +1,61 @@
 <style>
-	* {
-		box-sizing: border-box;
+	.nav-bar {
+		
 	}
 
-	.nav-bar {
-		padding-left: 50px;
-		padding-right: 50px;
-	}
-	.nav-container{
-		display: flex;
-		justify-content: space-between;
-		max-width: 1350px;
-		height: 80px;
-		align-items: center;
-	}
 	.nav-links{
-		display: flex;
-		gap: 30px;
-		align-items: center;
+		
 	}
 
 	.nav-link {
-		font-weight: 500;
-		font-size: 1.3rem;
-		color: #212B36
+		
 	}
 
 	.btn{
-		outline: none;
+		
+	}
+</style>
+<nav class="nav-bar" style="padding-left: 50px;
+		padding-right: 50px;">
+	<div class="nav-container" style="display: flex;
+		justify-content: space-between;
+		max-width: 1350px;
+		height: 80px;
+		align-items: center;">
+		<div>
+			<img src="/img/logo.png" />
+		</div>
+		<div class="nav-links" style="display: flex;
+		gap: 10px;
+		align-items: center;">
+			{{#if user}}
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="http://localhost:3000/dashboard/product/list">Dashboard</a>
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="/promotion/listPromotion">View Promotion</a>
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="/promotion/createPromotion">Add Promotion</a>
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="/user/profile">Profile</a>
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="/review/listReviews">List Review</a>
+			<a class="nav-link" style="font-weight: 500;
+		font-size: 1.1rem;
+		color: #212B36" href="/review/showAddReview">Create Review</a>
+			<button class="btn"><a href='/logout' style="outline: none;">Log out</a></button>
+			{{else}}
+			<a class="nav-link" href="http://localhost:3000/shop">Shop</a>
+			<button class="btn" style="outline: none;
 		background-color: #e67e22;
 		height: 40px;
 		width: 100px;
 		color: #fff;
-		font-weight: 700;
-	}
-</style>
-<nav class="nav-bar">
-	<div class="nav-container">
-		<div>
-			<img src="/img/logo.png" />
-		</div>
-		<div class="nav-links">
-			<a class="nav-link" href="http://localhost:3000/shop">Shop</a>
-			<button class="btn"><a href='/showLogin' style="outline: none;">Log out</a></button>
-			{{#if user}}
-			<a class="nav-link" href="http://localhost:3000/dashboard/products">Dashboard</a>
-			<a class="nav-link" href="/promotion/listPromotion">View Promotion</a>
-			<a class="nav-link" href="/promotion/createPromotion">Add Promotion</a>
-			<a class="nav-link" href="/user/profile">Profile</a>
-			<a class="nav-link" href="/review/listReviews">List Review</a>
-			<a class="nav-link" href="/review/showAddReview">Create Review</a>
-			<button class="btn"><a href='/logout' style="outline: none;">Log out</a></button>
+		font-weight: 700;"><a href='/showLogin' style="outline: none;">Sign In</a></button>
 			{{/if}}
 		</div>
 	</div>

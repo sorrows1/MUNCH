@@ -11,7 +11,7 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
 
-import { createProduct, getProduct } from '../../app/products/products.action'
+import { createProduct, getProduct, updateProduct } from '../../app/products/products.action'
 import { selectProduct } from '../../app/products/products.selector'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -65,6 +65,23 @@ const testing = [
 ]
 
 const ingredientsTesting = [
+    
+    {
+        "ingredientId": 15260,
+        "ingredient": "canned salmon"
+    },
+    {
+        "ingredientId": 15076,
+        "ingredient": "grilled salmon"
+    },
+    {
+        "ingredientId": 15072,
+        "ingredient": "salmon caviar"
+    },
+    {
+        "ingredientId": 10015076,
+        "ingredient": "salmon steaks"
+    },
     {
         "ingredientId": 1103,
         "ingredient": "1 percent chocolate milk"
@@ -504,7 +521,7 @@ const EditProduct = () => {
            formData.append('ingredients', JSON.stringify(values.ingredients))
            formData.append('types', JSON.stringify(values.types))
            console.log(values)
-           dispatch(createProduct(formData));
+           dispatch(updateProduct(id, formData));
            resetForm()
            alert('Product successfully updated')
         } catch (err) {

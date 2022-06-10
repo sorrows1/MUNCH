@@ -32,6 +32,7 @@ const productsSlice = createSlice({
         );
         state.status = 'idle';
       })
+      
   },
 });
 

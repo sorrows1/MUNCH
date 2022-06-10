@@ -91,6 +91,7 @@ exports.createProduct = async (req, res) => {
     fs.mkdirSync('./public/upoads' + req.user.id)
   }
 
+    if (!result) throw new Error(`Product ${id} does not exists!`);
   try {
     const product = await Product.create(req.body);
     const { id } = product;
