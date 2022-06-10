@@ -1,0 +1,143 @@
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+<div class="container">
+	<div class="card card-body">
+		<h3>Edit Ingredient</h3>
+		<form action="/inventory/saveEditedInventory/{{inventory.id}}?_method=PUT" method="post">
+		<input type="hidden" name="_method" value="PUT">
+			<div class="form-group">
+				<label class="font-arial" for="itemName">Item Name:</label>
+				<input type="text" class="form-control" name="itemName" value="{{inventory.itemName}}" required>
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-arial" for="description">Description:</label>
+				<textarea class="form-control" id="description" name="description" rows="7">{{inventory.description}}</textarea>
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="quantity">Quantity:</label>
+					<input type="number" name="quantity" value="{{inventory.quantity}}" require min="0" value="0" step="any">
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="price">Price (per unit):</label>
+				<input type="number" name="price" value="{{inventory.price}}" require min="0" value="0" step="any">
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="totalPrice">Total Price(SGD):</label>
+				<input type="number" name="totalPrice" value="{{inventory.totalPrice}}" require min="0" value="0" step="any">
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="supplierName">Supplier Name:</label>
+				<input type="text" class="form-control" name="supplierName"  value="{{inventory.supplierName}}" required>
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="supplierPhoneNumber">Supplier Phone Number:</label>
+				<input type="number" class="form-control" name="supplierPhoneNumber"  value="{{inventory.supplierPhoneNumber}}" required>
+			</div>
+			<div class="form-group">
+				<label class="font-arial" for="checkedByStaffName">Check by Staff Name:</label>
+				<input type="text" class="form-control" name="checkedByStaffName"  value="{{inventory.checkedByStaffName}}" required>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-arial">Ingredient Type:</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Meat" value="Meat" name="ingredientType" {{radioCheck inventory.ingredientType 'Meat'}}>
+							<label class="form-check-label" for="Meat">Meat</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Vegetable" value="Vegetable" name="ingredientType" {{radioCheck inventory.ingredientType 'Vegetable'}}>
+							<label class="form-check-label" for="Vegetable">Vegetable</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Noodle" value="Noodle" name="ingredientType" {{radioCheck inventory.ingredientType 'Noodle'}}>
+							<label class="form-check-label" for="Noodle">Noodle</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Rice" value="Rice" name="ingredientType" {{radioCheck inventory.ingredientType 'Rice'}}>
+							<label class="form-check-label" for="Rice">Rice</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Beef" value="Beef" name="ingredientType" {{radioCheck inventory.ingredientType 'Beef'}}>
+							<label class="form-check-label" for="Beef">Beef</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Pork" value="Pork" name="ingredientType" {{radioCheck inventory.ingredientType 'Pork'}}>
+							<label class="form-check-label" for="Pork">Pork</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Others" value="Others" name="ingredientType"  {{radioCheck inventory.ingredientType 'Others'}}>
+							<label class="form-check-label" for="Others">Others(sauce, chill, or other ingredient etc)</label>
+						</div>
+					</div>
+					</div>
+				</div>
+			<div class="form-group">
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
+						<label class="font-arial">Import Date:</label>
+						<input id="datepicker" width="200" name="importDate" readonly value="{{formatDate inventory.importDate 'DD/MM/YYYY'}}"/>
+					</div>
+				</div>
+			<div class="form-group">
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
+						<label class="font-arial">Expiry Date:</label>
+						<input id="datepicker" width="200" name="expiryDate" readonly value="{{formatDate inventory.expiryDate 'DD/MM/YYYY'}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-arial">Status:</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Available" value="Available" name="status" {{radioCheck inventory.status 'Available'}}>
+							<label class="form-check-label" for="Available">Available</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Unavailabe" value="Unavailabe" name="status" {{radioCheck inventory.status 'Unavailable'}}>
+							<label class="form-check-label" for="Unavailabe">Unavailable</label>
+						</div>
+					<div class="col-lg-3">
+					{{!-- File Upload --}}
+					<input type="file" id="postedUpload" name="posterUpload" accept="image/png, image/jpeg,image/jpg,image/gif">
+
+					{{!-- Poster image --}}
+					<img id="poster" src="{{inventory.posterURL}}" alt="" class="border img-thumbnail img-fluid" style="height:95%;width:100%">
+
+					{{!-- Hidden field to submit URL of poster to the server --}}
+					<input id="posterURL" type="hidden" name="posterURL" value="{{inventory.posterURL}}">
+
+					{{!-- Hidden error msg --}}
+					<div class="font-weight-bold text-danger small" id="posterErr" style="display:none"></div>
+
+				</div>
+		
+			</div>
+						{{!--<div class="form-check form-check-inline">
+							<div class="form-group">
+								<input type="text" class="form-control form-control-sm" name="otherSub" id="otherSub" placeholder="Other">
+							</div>
+						</div>--}}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<br>
+			<button id="butAddInventory" type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</div>
+
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+	});
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+	});
+</script>
