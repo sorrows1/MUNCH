@@ -87,17 +87,17 @@ router.post('/register', (req, res) => {
                                 role: "customer",
                                 intolerances: "None",
                                 diet: "None",
-                                verified: 0, // Add this statement - Set Verified to False
+                                verified: 1, // Add this statement - Set Verified to False
                             }).then(user => {
-                                sendEmail(user.id, user.email, token)
-                                    .then(msg => {  // send email success
+                                // sendEmail(user.id, user.email, token)
+                                //     .then(msg => {  // send email success
                                         alertMessage(res, 'success', user.name + ' added. Please logon to ' + user.email + ' to verify account.',
                                             'fas fa-sign-in-alt', true);
                                         res.redirect('/showLogin');
-                                    }).catch(err => {       // send email fail
-                                        alertMessage(res, 'warning', 'Error sending to ' + user.email, 'fas fa-sign-in-alt', true);
-                                        res.redirect('/');
-                                    });
+                                //     }).catch(err => {       // send email fail
+                                //         alertMessage(res, 'warning', 'Error sending to ' + user.email, 'fas fa-sign-in-alt', true);
+                                //         res.redirect('/');
+                                //     });
                             }).catch(err => console.log(err));
                         });
                     });
