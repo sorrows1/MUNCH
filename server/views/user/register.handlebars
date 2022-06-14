@@ -28,7 +28,7 @@
 				<div class="form-group">
 					<label class="font-italic">Birth Date</label>
 					<input id="datepicker" name="birthdate" readonly
-						value="{{formatDate birthdate 'DD/MM/YYYY'}}" />
+						value="{{formatDate birthdate 'DD/MM/YYYY'}}"/>
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
@@ -45,8 +45,20 @@
 </div>
 
 <script>
+	let d = new Date();
+	d.setFullYear(d.getFullYear() - 16);
+	{{#if birthdate}}
 	$('#datepicker').datepicker({
 		format: 'dd/mm/yyyy',
 		uiLibrary: 'bootstrap4',
+		maxDate: d.toLocaleDateString('en-GB'),
 	});
+	{{else}}
+	$('#datepicker').datepicker({
+		value: d.toLocaleDateString('en-GB'),
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+		maxDate: d.toLocaleDateString('en-GB'),
+	});
+	{{/if}}
 </script>
