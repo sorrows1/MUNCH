@@ -3,7 +3,9 @@ const req = require('express/lib/request');
 const router = express.Router();
 const alertMessage = require('../helpers/messenger');
 const Promotion = require('../models/Promotion');
+const User = require('../models/User');
 const schedule = require('node-schedule');
+const voucher_codes = require('voucher-code-generator');
 
 
 const moment = require('moment');
@@ -105,11 +107,51 @@ router.get('/CreatePromotion', (req, res) => {
 	tommorow = formatDate(tommorow);
 	endDate = formatDate(endDate);
 
-	res.render('promotion/CreatePromotion', {
-		defaultStartDate: tommorow,
-		endDate: endDate
-	});
+	User.findAll()
+		.then(user => {
+			res.render('promotion/CreatePromotion', {
+				defaultStartDate: tommorow,
+				endDate: endDate,
+				user: user
+			});
+		})
+
+	
 });
+
+function generateCode() {
+	const code = voucher_codes.generate({
+		length: 8,
+		count: 1,
+		charset: voucher_codes.charset("alphanumeric")
+	});
+
+	return code[0]
+}
+
+router.post('/generateCode', (req, res) => {
+
+	let code;
+	
+	while (true) {
+		code = generateCode();
+		let checker = true;
+		Promotion.findOne({where: { PromotionCode: code}})
+			.then(promotion => {
+				if (promotion) {
+					checker = false;
+				}
+			});
+		
+		if  (checker) {
+			break
+		}
+	};
+
+	res.send({response: code});
+	
+});
+
 
 router.post('/createPromotions', (req, res) => {
 

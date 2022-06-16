@@ -82,6 +82,8 @@ $('#postedUpload').on('change', function(){
 });
 
 $(document).ready(function () {
+
+
 	$('#addPromotionForm').bootstrapValidator({
 		// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
 		feedbackIcons: {
@@ -226,6 +228,7 @@ $(document).ready(function () {
 			}, 'json');
 		});
 });
+
 
 
 $('#profilePicUpload').on('change', function () {
