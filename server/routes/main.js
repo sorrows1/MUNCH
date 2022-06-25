@@ -10,32 +10,32 @@ const bcrypt = require('bcryptjs'); // for password encryption
 const moment = require('moment');
 
 router.get('/', (req, res) => {
-  User.findOne({ where: { role: 'admin' } }).then((Admin) => {
-    if (!Admin) {
-      let password = 'password';
-      // Generate salt hashed password
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(password, salt, (err, hash) => {
-          if (err) throw err;
-          password = hash;
-
-          User.create({
-            name: 'Admin 1',
-            email: 'appdevproject9@gmail.com',
-            password,
-            role: 'admin',
-            verified: 1,
-          });
-        });
-      });
-    }
-  });
-
-  if (req.user?.id) {
-    return res.render('user/profile');
-  }
-  const title = 'Video Jotter';
-  res.render('about')
+	
+	User.findOne({ where: { role: 'admin' } })
+		.then((Admin) => {
+			if (!Admin) {
+				let password = 'password';
+				// Generate salt hashed password
+				bcrypt.genSalt(10, (err, salt) => {
+					bcrypt.hash(password, salt, (err, hash) => {
+						if (err) throw err;
+						password = hash;
+						
+						User.create({
+							name: 'Admin 1',
+							email: 'appdevproject9@gmail.com',
+							password,
+							dateJoined: moment().format('L'),
+							role: 'admin',
+							verified: 1,
+						})
+					})
+				})
+			}
+		})
+	const title = 'Video Jotter';
+	res.render('index', { title: title }) // renders views/index.handlebars
+>>>>>>> assignment-Jamie
 });
 
 // User Login Route

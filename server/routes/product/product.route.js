@@ -2,6 +2,7 @@ const express = require('express');
 const productController = require('../../controllers/product/product.controller');
 const router = express.Router();
 
+<<<<<<< HEAD
 
 const multer = require('multer');
 const path = require('path');
@@ -41,16 +42,3 @@ function checkFileType(file, callback) {
 
 router.param('id', productController.checkID);
 
-router
-  .route('/')
-  .get(productController.getAllProducts)
-  .post(uploadImage.single('image'), productController.createProduct);
-
-router
-  .route('/:id')
-  .get(productController.getProduct)
-  .delete(productController.removeProduct)
-  .patch(uploadImage.single('image'), productController.updateProduct);
-
-
-module.exports = router;

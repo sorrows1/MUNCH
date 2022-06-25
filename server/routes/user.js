@@ -87,17 +87,18 @@ router.post('/register', (req, res) => {
                                 role: "customer",
                                 intolerances: "None",
                                 diet: "None",
-                                verified: 0, // Add this statement - Set Verified to False
+                                verified: 1, // Add this statement - Set Verified to False
                             }).then(user => {
-                                sendEmail(user.id, user.email, token)
-                                    .then(msg => {  // send email success
-                                        alertMessage(res, 'success', user.name + ' added. Please logon to ' + user.email + ' to verify account.',
-                                            'fas fa-sign-in-alt', true);
+                                console.log(user);
+                                // sendEmail(user.id, user.email, token)
+                                //     .then(msg => {  // send email success
+                                        alertMessage(res, 'success', user.dataValues.name + ' added. Please logon to ' + user.dataValues.email + ' to verify account.',
+                                            'fas fa-sign-in-alt', false);
                                         res.redirect('/showLogin');
-                                    }).catch(err => {       // send email fail
-                                        alertMessage(res, 'warning', 'Error sending to ' + user.email, 'fas fa-sign-in-alt', true);
-                                        res.redirect('/');
-                                    });
+                                //     }).catch(err => {       // send email fail
+                                //         alertMessage(res, 'warning', 'Error sending to ' + user.email, 'fas fa-sign-in-alt', true);
+                                //         res.redirect('/');
+                                //     });
                             }).catch(err => console.log(err));
                         });
                     });
@@ -179,21 +180,7 @@ router.get('/profile', (req, res) => {
             id: req.user.id
         }
     }).then((user) => {
-        console.log(user);
         res.render('user/profile', {
-            user: user
-        });
-    }).catch(err => console.log(err));
-})
-
-router.get('/updateBasic', (req, res) => {
-    User.findOne({
-        where: {
-            id: req.user.id
-        }
-    }).then((user) => {
-        console.log(user);
-        res.render('user/updateBasic', {
             user: user
         });
     }).catch(err => console.log(err));
@@ -368,12 +355,12 @@ function sendEmail(userId, email, token) {
     const message = {
         to: email,
         from: {
-            name: 'Jamie',
+            name: 'Munch',
             email: 'appdevproject9@gmail.com',
         },
-        subject: 'Verify Video Jotter Account',
-        text: 'Video Jotter Email Verification',
-        html: 'Thank you for registering with Video Jotter.<br><br>Please <a href="' + verifyURL + '"><strong>verify</strong></a> your account.'
+        subject: 'Verify Munch Account',
+        text: 'Munch Email Verification',
+        html: 'Thank you for registering with Munch.<br><br>Please <a href="' + verifyURL + '"><strong>verify</strong></a> your account.'
     };
 
     return new Promise((resolve, reject) => {

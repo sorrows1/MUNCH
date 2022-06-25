@@ -106,8 +106,8 @@ import useResponsive from '../hooks/useResponsive';
             <NavLink path='dashboard/product/list'>Dashboard</NavLink>
             <NavLink path='/'>Product</NavLink>
             <NavLink path='/'>Product</NavLink>
-            <NavLink path='http://localhost:5000/showRegister'>Register</NavLink>
-            <Button variant="contained" href="http://localhost:5000/showLogin" sx={{ boxShadow: 'none', p:'5px 29px'}}>
+            <NavLink path='/'>Product</NavLink>
+            <Button variant="contained" href="#" sx={{ boxShadow: 'none', p:'5px 29px'}}>
               <Typography variant='h6'>Sign in</Typography>
             </Button>
           </Stack> 
@@ -138,13 +138,13 @@ export const Navigation = (props) => {
             isDesktop 
             ? <Stack direction='row' spacing={{lg: 5, md: 3}} alignItems='center'>
               <NavLink path='shop'>Shop</NavLink>
-              {/* <NavLink path='dashboard/product/list'>Dashboard</NavLink> */}
               <NavLink path='dashboard/product/list'>Dashboard</NavLink>
               <NavLink path='/'>Product</NavLink>
-              <NavLink href='/'>Register</NavLink>
-                <Button variant="contained" href="http://localhost:5000/showLogin" sx={{ boxShadow: 'none', p:'5px 29px'}}>
-              <Typography variant='h6'>Sign in</Typography>
-            </Button>
+              <NavLink path='/'>Product</NavLink>
+              <NavLink path='/'>Product</NavLink>
+              <Button variant="contained" href="#" sx={{ boxShadow: 'none', p:'5px 29px'}}>
+                <Typography variant='h6'>Sign in</Typography>
+              </Button>
             </Stack> 
             : <NavMenu isMenuOpen={open} onMenuOpen={onMenuOpen} onMenuClose={onMenuClose}  />
             }

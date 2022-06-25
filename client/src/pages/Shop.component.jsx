@@ -1,5 +1,4 @@
-import { useDispatch } from 'react-redux';
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 import { useSelector} from 'react-redux'
 
 import { Stack } from '@mui/material';
@@ -7,9 +6,12 @@ import { Stack } from '@mui/material';
 import Section from '../components/Section.component';
 import { ProductFilterSidebar, ProductSort, ProductSearchBar, ProductShop } from '../components/shop';
 
-import { getProductAll } from '../app/products/products.action';
 import { selectProducts } from '../app/products/products.selector';
 import useResponsive from '../hooks/useResponsive';
+<<<<<<< HEAD
+=======
+
+>>>>>>> assignment-Jamie
 const products = [
     {
         "id": 2,
@@ -661,6 +663,7 @@ const products = [
     },
     {
         "id": 3,
+<<<<<<< HEAD
         "title": "Salmon updated",
         "price": "100",
         "image": "static/imgs/meal-2.webp",
@@ -698,6 +701,8 @@ const products = [
     },
      {
         "id": 3,
+=======
+>>>>>>> assignment-Jamie
         "title": "testing 123",
         "price": "11.00",
         "image": "static/imgs/meal-2.webp",
@@ -736,6 +741,7 @@ const products = [
 ]
 
 const Shop = ({sx}) => {
+<<<<<<< HEAD
     // const dispatch = useDispatch();
 
     // useEffect(() => {
@@ -743,6 +749,9 @@ const Shop = ({sx}) => {
     //     // eslint-disable-next-line
     // }, []);
 
+=======
+
+>>>>>>> assignment-Jamie
     // const products = useSelector(selectProducts)
     
     const [ isOpenFilter, setIsOpenFilter ] = useState(false);
@@ -759,6 +768,9 @@ const Shop = ({sx}) => {
 
     return ( 
       <main>
+        <Section>
+
+        </Section>
         <Section sx={{mt: 6, ...sx}}>
           <Stack direction={isDesktop ? 'row' : 'column'} justifyContent='space-between' alignItems={isDesktop ? 'center': 'initial'} sx={{mb: 3}}>
             <ProductSearchBar size='small' placeholder='Search product...' />

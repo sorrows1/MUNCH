@@ -1,6 +1,5 @@
-import { useDispatch } from 'react-redux';
 import { filter } from 'lodash';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -17,7 +16,6 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Link
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 // components
@@ -25,8 +23,6 @@ import Scrollbar from '../../components/ScrollBar.component';
 import { TableListHead, TableListToolbar, TableMoreMenu } from '../../components/dashboard/table';
 
 import { selectProducts } from '../../app/products/products.selector';
-
-import { getProductAll } from '../../app/products/products.action';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -69,13 +65,6 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function ProductList() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductAll());
-    // eslint-disable-next-line
-  }, []);
-
   const products = useSelector(selectProducts)
 
   const [page, setPage] = useState(0);
@@ -148,7 +137,7 @@ export default function ProductList() {
           <Typography variant="h4" gutterBottom>
             Product List
           </Typography>
-          <Button variant="contained" component={RouterLink} to="/dashboard/product/new" startIcon={<AddIcon />}>
+          <Button variant="contained" component={RouterLink} to="#" startIcon={<AddIcon />}>
             New Product
           </Button>
         </Stack>
@@ -185,20 +174,19 @@ export default function ProductList() {
                         <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, title)} />
                         </TableCell>
-                        <TableCell component="th" scope="row" >
+                        <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Link component={RouterLink} to={`/dashboard/product/${id}`}>
-                              <Typography variant="subtitle2" noWrap>
-                                {title}
-                              </Typography>
-                            </Link>
+                            <p>hi</p>
+                            <Typography variant="subtitle2" noWrap>
+                              {title}
+                            </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{createdAt.substring(0, 10)}</TableCell>
+                        <TableCell align="left">{createdAt}</TableCell>
                         <TableCell align="left">{active ? 'Active' : 'No'}</TableCell>
                         <TableCell align="left">{price}</TableCell>
                         <TableCell align="right">
-                          <TableMoreMenu id={id} />
+                          <TableMoreMenu />
                         </TableCell>
                       </TableRow>
                     );

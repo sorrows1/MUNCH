@@ -22,7 +22,6 @@ const upload = multer({
     }
 }).single('profilePicUpload'); // Must be the name as the HTML file upload input
 
-
 // Check File Type
 function checkFileType(file,callback){
     // Allowed file extensions

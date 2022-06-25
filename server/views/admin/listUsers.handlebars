@@ -1,0 +1,43 @@
+<div class="container">
+    <h3>Account Management</h3>
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            {{#if (ifEquals users.length 1)}}
+            <p>There is {{users.length}} account.</p>
+            {{else}}
+            <p>There are {{users.length}} accounts.</p>
+            {{/if}}
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Date Joined</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <td>{{math @index "+" 1}}</td>
+                        <td>{{dataValues.email}}</td>
+                        <td>{{dataValues.name}}</td>
+                        <td>{{dataValues.role}}</td>
+                        <td>{{formatDate dataValues.dateJoined 'DD/MM/YYYY'}}</td>
+                        <td><a href="/admin/viewUser/{{dataValues.id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </td>
+                        <td>
+                            <a href="/admin/delete/{{dataValues.id}}" class="card-link" data-toggle="confirmation"
+                                data-title="Confirm delete?">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+        </div>
+    </div>
+</div>

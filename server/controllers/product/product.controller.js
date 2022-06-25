@@ -1,11 +1,10 @@
-
-
 const Product = require('../../models/Product/Product.model');
 const Ingredient = require('../../models/Product/Ingredient.model');
 const Nutrient = require('../../models/Product/Nutrient.model');
 const Type = require('../../models/Product/Type.model');
 const {
   Recipe,
+  ProductNutrient,
   ProductType,
 } = require('../../models/Product/associations');
 
@@ -19,18 +18,11 @@ const {
   removeProductTypes,
 } = require('../../helper/updateProduct.helper');
 
-exports.checkID = async (req, res, next, val) => {
-  try{
-    const response = await Product.findByPk(+val)
-    if (!response) return res.status(400).json({ status: 'fail', message: `Product does not exist` });
-
-  } catch (err) {
-    return res
-      .status(400)
-      .json({ status: 'fail', message: `${err}` });
-  }
-  next();
-};
+// exports.checkID = (req, res, next, val) => {
+//   if (+val > 10)
+//     return res.status(400).json({ status: 'fail', message: 'Invalid Id' });
+//   next();
+// };
 
 exports.getAllProducts = async (req, res) => {
   try {
@@ -66,6 +58,10 @@ exports.getProduct = async (req, res) => {
           },
         },
         {
+          model: Nutrient,
+          through: { attributes: ['amount', 'percentOfDailyNeeds'] },
+        },
+        {
           model: Type,
           through: { attributes: [] },
         },
@@ -81,57 +77,83 @@ exports.getProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const { ingredients, types } = req.body;
-  if (!fs.existsSync('./public/uploads' + req.user.id)) {
-      fs.mkdirSync('./public/upoads' + req.user.id);
-    }
+
+  const { ingredients, nutrients, types } = req.body;
+
   try {
-    const product = await Product.create({...req.body, image: req.file.originalname});
+    const product = await Product.create(req.body);
     const { id } = product;
 
-    const { newRecipes,  newTypes } = addProductIdToAttributes(
+    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
       id,
-      JSON.parse(ingredients),
-      JSON.parse(types)
+      ingredients,
+      nutrients,
+      types
     );
-
 
     // create records in the many to many associations
     await Promise.all([
       Recipe.bulkCreate(newRecipes),
+      ProductNutrient.bulkCreate(newNutrients),
       ProductType.bulkCreate(newTypes),
     ]);
 
-    res.status(201).json({ status: 'ok', product: {...product.dataValues, types} });
+    res.status(201).json({ status: 'ok', message: 'success' });
   } catch (err) {
-    console.log(err)
-    // res.status(500).json({
-    //   status: 'fail',
-    //   message: `error trying to create product ${err}`,
-    // });
+    res.status(500).json({
+      status: 'fail',
+      message: `error trying to create product ${err}`,
+    });
   }
 };
 
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { ingredients, types } = req.body;
+    const {
+      createAndUpdate: { ingredients, nutrients, types },
+      remove: {
+        ingredients: removeIngredients,
+        nutrients: removeNutrients,
+        types: removeTypes,
+      },
+    } = req.body;
 
-
-    await Product.create({...req.body, id, image: req.file.originalname});
-
-    const { newRecipes,  newTypes } = addProductIdToAttributes(
+    const { newRecipes, newNutrients, newTypes } = addProductIdToAttributes(
       id,
-      JSON.parse(ingredients),
-      JSON.parse(types)
+      ingredients,
+      nutrients,
+      types
     );
+    const result = await Product.update(
+      { ...req.body },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    if (!result[0]) throw new Error('Product does not exist');
 
-    // create records in the many to many associations
-    await Promise.all([
-      Recipe.bulkCreate(newRecipes),
-      ProductType.bulkCreate(newTypes),
-    ]);
+    if (newRecipes.length || newNutrients.length || newTypes.length) {
+      await Promise.all([
+        updateRecipeTable(newRecipes),
+        updateProductNutrientTable(newNutrients),
+        createProductTypes(newTypes),
+      ]);
+    }
 
+    if (
+      removeIngredients.length ||
+      removeNutrients.length ||
+      removeTypes.length
+    ) {
+      await Promise.all([
+        removeRecipes(id, removeIngredients),
+        removeProductNutrients(id, removeNutrients),
+        removeProductTypes(id, removeTypes),
+      ]);
+    }
 
     res
       .status(200)

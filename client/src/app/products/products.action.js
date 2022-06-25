@@ -14,36 +14,14 @@ export const getProductAll = createAsyncThunk(
   }
 );
 
-export const getProduct = createAsyncThunk(
-  'product/getProduct',
-  async (id) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/products/${id}`);
-      return response.data;
-    } catch (err) {
-      return err;
-    }
-  }
-)
-
-export const updateProduct = createAsyncThunk(
-  'product/updateProduct',
-  async (id, product) => {
-    try{
-      const response = await axios.patch(`${BASE_URL}/products/${id}`, product)
-      return response.data
-    } catch(err) {
-      return err
-    }
-  }
-)
-
 export const createProduct = createAsyncThunk(
   'product/createProduct',
   async (product) => {
     try {
-      const response = await axios.post(`${BASE_URL}/products`, product, {
-      });
+      const response = await axios.post(
+        `${BASE_URL}/products`,
+        product
+      );
       return response.data;
     } catch (err) {
       return err;
