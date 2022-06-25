@@ -59,7 +59,7 @@ router.get('/edit/:id', (req, res) => {
         }
     }).then((review) => {
         //only authorised user which is the owner can edit
-        if (req.user.id === review.userId) {
+        if (req.user?.id === review.userId) {
             // call views/review/editReview.handlebar to render the edit review page
             res.render('review/editReview', {
                 review

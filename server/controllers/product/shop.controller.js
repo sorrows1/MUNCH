@@ -1,33 +1,21 @@
-
-
 const Product = require('../../models/Product/Product.model');
 const Ingredient = require('../../models/Product/Ingredient.model');
 const Nutrient = require('../../models/Product/Nutrient.model');
 const Type = require('../../models/Product/Type.model');
-const {
-  Recipe,
-  ProductType,
-} = require('../../models/Product/associations');
+const { Recipe, ProductType } = require('../../models/Product/associations');
 
 const addProductIdToAttributes = require('../../helper/addProductID.helper');
-const {
-  updateRecipeTable,
-  updateProductNutrientTable,
-  createProductTypes,
-  removeRecipes,
-  removeProductNutrients,
-  removeProductTypes,
-} = require('../../helper/updateProduct.helper');
+
 
 exports.checkID = async (req, res, next, val) => {
-  try{
-    const response = await Product.findByPk(+val)
-    if (!response) return res.status(400).json({ status: 'fail', message: `Product does not exist` });
-
+  try {
+    const response = await Product.findByPk(+val);
+    if (!response)
+      return res
+        .status(400)
+        .json({ status: 'fail', message: `Product does not exist` });
   } catch (err) {
-    return res
-      .status(400)
-      .json({ status: 'fail', message: `${err}` });
+    return res.status(400).json({ status: 'fail', message: `${err}` });
   }
   next();
 };
@@ -36,14 +24,18 @@ exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
       include: [
-        { model: Type,
+        {
+          model: Type,
           through: {
             attributes: [],
-          }
-        }
+          },
+        },
       ],
+      raw: true
     });
-    res.status(200).json(products);
+    res.status(200).render('shop/shop', {
+        products,
+    })
   } catch (err) {
     res
       .status(500)
@@ -70,6 +62,7 @@ exports.getProduct = async (req, res) => {
           through: { attributes: [] },
         },
       ],
+      raw: true,
     });
     if (!product.length) throw new Error('Product does not exist');
     res.status(200).json(product);
@@ -82,19 +75,18 @@ exports.getProduct = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   const { ingredients, types } = req.body;
-  if (!fs.existsSync('./public/uploads' + req.user.id)) {
-      fs.mkdirSync('./public/upoads' + req.user.id);
-    }
   try {
-    const product = await Product.create({...req.body, image: req.file.originalname});
+    const product = await Product.create({
+      ...req.body,
+      image: req.file.originalname,
+    });
     const { id } = product;
 
-    const { newRecipes,  newTypes } = addProductIdToAttributes(
+    const { newRecipes, newTypes } = addProductIdToAttributes(
       id,
       JSON.parse(ingredients),
       JSON.parse(types)
     );
-
 
     // create records in the many to many associations
     await Promise.all([
@@ -102,9 +94,11 @@ exports.createProduct = async (req, res) => {
       ProductType.bulkCreate(newTypes),
     ]);
 
-    res.status(201).json({ status: 'ok', product: {...product.dataValues, types} });
+    res
+      .status(201)
+      .json({ status: 'ok', product: { ...product.dataValues, types } });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     // res.status(500).json({
     //   status: 'fail',
     //   message: `error trying to create product ${err}`,
@@ -117,10 +111,9 @@ exports.updateProduct = async (req, res) => {
     const { id } = req.params;
     const { ingredients, types } = req.body;
 
+    await Product.create({ ...req.body, id, image: req.file.originalname });
 
-    await Product.create({...req.body, id, image: req.file.originalname});
-
-    const { newRecipes,  newTypes } = addProductIdToAttributes(
+    const { newRecipes, newTypes } = addProductIdToAttributes(
       id,
       JSON.parse(ingredients),
       JSON.parse(types)
@@ -131,7 +124,6 @@ exports.updateProduct = async (req, res) => {
       Recipe.bulkCreate(newRecipes),
       ProductType.bulkCreate(newTypes),
     ]);
-
 
     res
       .status(200)

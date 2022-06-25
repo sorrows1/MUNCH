@@ -1,0 +1,36 @@
+<!-- Main Section-->
+<section class='container mt-0 p-0'>
+  <div class='row'>
+    <!-- Products-->
+    {{#if products}}
+      {{#each products}}
+        <div class='col-lg-3 col-md-4 col-sm-6 p-0'>
+          <a
+            href='shop/{{id}}'
+            style='color: inherit;
+    text-decoration: none;'
+          >
+            <div class='card'>
+              <img
+                class='card-img-top'
+                src='uploads/{{image}}'
+                alt='Card image cap'
+              />
+              <div class='card-body'>
+                <h5 class='card-title'>{{title}}</h5>
+                <p class='card-text'>
+                  {{description}}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {{/each}}
+    {{else}}
+      <div>No Product</div>
+    {{/if}}
+  </div>
+</section>
+<!-- / Main Section-->
+
+<!-- Footer -->

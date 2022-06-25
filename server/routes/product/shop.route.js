@@ -1,27 +1,16 @@
 const express = require('express');
-const productController = require('../../controllers/product/product.controller');
+const shopController = require('../../controllers/product/shop.controller');
 const router = express.Router();
-
 
 const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, './public/uploads/');
+    callback(null, './public/uploads/' + req.user.id + '/');
   },
   filename: (req, file, callback) => {
     callback(null, file.originalname);
-  },
-});
-
-const uploadImage = multer({
-  storage: storage,
-  limits: {
-    fileSize: 10000000000,
-  },
-  fileFilter: (req, file, callback) => {
-    checkFileType(file, callback);
   },
 });
 
@@ -39,18 +28,28 @@ function checkFileType(file, callback) {
   }
 }
 
-router.param('id', productController.checkID);
+const uploadImage = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10000000000,
+  },
+  fileFilter: (req, file, callback) => {
+    checkFileType(file, callback);
+  },
+}).single('image')
+
+
+router.param('id', shopController.checkID);
 
 router
   .route('/')
-  .get(productController.getAllProducts)
-  .post(uploadImage.single('image'), productController.createProduct);
+  .get(shopController.getAllProducts)
+  .post(shopController.createProduct);
 
 router
   .route('/:id')
-  .get(productController.getProduct)
-  .delete(productController.removeProduct)
-  .patch(uploadImage.single('image'), productController.updateProduct);
-
+  .get(shopController.getProduct)
+  .delete(shopController.removeProduct)
+  .patch(shopController.updateProduct);
 
 module.exports = router;
