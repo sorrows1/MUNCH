@@ -35,7 +35,6 @@ router.get('/', (req, res) => {
 		})
 	const title = 'Video Jotter';
 	res.render('index', { title: title }) // renders views/index.handlebars
->>>>>>> assignment-Jamie
 });
 
 // User Login Route
