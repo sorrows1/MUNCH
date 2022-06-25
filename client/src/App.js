@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
-<<<<<<< HEAD
 import { Navigation } from './routes/navigation.component';
 import Home from './pages/Home.component';
 import Shop from './pages/Shop.component';
