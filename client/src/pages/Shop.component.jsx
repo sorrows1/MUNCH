@@ -10,17 +10,740 @@ import { ProductFilterSidebar, ProductSort, ProductSearchBar, ProductShop } from
 import { getProductAll } from '../app/products/products.action';
 import { selectProducts } from '../app/products/products.selector';
 import useResponsive from '../hooks/useResponsive';
-
+const products = [
+    {
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },{
+        "id": 2,
+        "title": "testing update",
+        "price": "11.00",
+        "image": "static/imgs/meal-1.webp",
+        "description": "testing recipe",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-25T06:58:57.000Z",
+        "updatedAt": "2022-05-26T12:00:13.000Z",
+        "types": [
+            {
+                "id": 4,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 2,
+                    "typeId": 4
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Salmon updated",
+        "price": "100",
+        "image": "static/imgs/meal-2.webp",
+        "description": "salmon",
+        "healthScore": "20.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "lowFodmap",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },
+     {
+        "id": 3,
+        "title": "testing 123",
+        "price": "11.00",
+        "image": "static/imgs/meal-2.webp",
+        "description": "testing",
+        "healthScore": "100.00",
+        "active": true,
+        "createdAt": "2022-05-26T11:47:24.000Z",
+        "updatedAt": "2022-05-26T11:47:24.000Z",
+        "types": [
+            {
+                "id": 1,
+                "name": "dairyFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 1
+                }
+            },
+            {
+                "id": 2,
+                "name": "glutenFree",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 2
+                }
+            },
+            {
+                "id": 3,
+                "name": "ketogenic",
+                "productType": {
+                    "productId": 3,
+                    "typeId": 3
+                }
+            }
+        ]
+    },
+]
 
 const Shop = ({sx}) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getProductAll());
-        // eslint-disable-next-line
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getProductAll());
+    //     // eslint-disable-next-line
+    // }, []);
 
-    const products = useSelector(selectProducts)
+    // const products = useSelector(selectProducts)
     
     const [ isOpenFilter, setIsOpenFilter ] = useState(false);
 
