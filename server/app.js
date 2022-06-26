@@ -92,7 +92,7 @@ app.engine('handlebars', exphbs.engine({
 
 
 app.use('/', mainRoute)
-app.use('/api/v1/products', productRoute);
+// app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
 app.use('/shop', shopRoute);
 app.use('/user', userRoute);

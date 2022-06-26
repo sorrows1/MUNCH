@@ -2,7 +2,6 @@ const express = require('express');
 const productController = require('../../controllers/product/product.controller');
 const router = express.Router();
 
-
 const multer = require('multer');
 const path = require('path');
 
@@ -39,5 +38,17 @@ function checkFileType(file, callback) {
   }
 }
 
-router.param('id', productController.checkID);
+// router.param('id', productController.checkID);
 
+// router
+//   .route('/')
+//   .get(productController.getAllProducts)
+//   .post(productController.createProduct);
+
+// router
+//   .route('/:id')
+//   .get(productController.getProduct)
+//   .delete(productController.removeProduct)
+//   .patch(productController.updateProduct);
+
+// module.exports = router;
