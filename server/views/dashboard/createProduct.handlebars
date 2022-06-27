@@ -1,0 +1,40 @@
+<section>
+  <h4 class="mb-3">
+    Create a new product
+  </h4>
+  <form class='row g-3 needs-validation' novalidate>
+    <div class='col-md-8 col-sm-12'>
+      <div class='card flex-column g-3 p-3'>
+        <label for='validationCustom01' class='form-label'>Product name</label>
+        <input
+          type='text'
+          class='form-control'
+          id='validationCustom01'
+          placeholder="product name"
+          required
+        />
+        <div class='invalid-feedback'>
+          Product name is required.
+        </div><label for='validationCustom02' class='form-label mt-3'>Description</label>
+        <textarea
+          class='form-control'
+          id='validationCustom02'
+          rows="8"
+          placeholder="description"
+          required
+        ></textarea>
+        <div class='invalid-feedback'>
+          Description is required.
+        </div>
+      </div>
+    </div>
+    <div class='col-md-4 col-sm-12'>
+      <div class='card'>
+
+      </div>
+    </div>
+  </form>
+</section>
+<script>
+  $(document).ready(function() { $('.js-example-basic-multiple').select2(); });
+</script>

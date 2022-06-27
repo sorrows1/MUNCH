@@ -6,7 +6,6 @@ const { Recipe, ProductType } = require('../../models/Product/associations');
 
 const addProductIdToAttributes = require('../../helper/addProductID.helper');
 
-
 exports.checkID = async (req, res, next, val) => {
   try {
     const response = await Product.findByPk(+val);
@@ -31,11 +30,11 @@ exports.getAllProducts = async (req, res) => {
           },
         },
       ],
-      raw: true
+      raw: true,
     });
     res.status(200).render('shop/shop', {
-        products,
-    })
+      products,
+    });
   } catch (err) {
     res
       .status(500)
@@ -65,7 +64,9 @@ exports.getProduct = async (req, res) => {
       raw: true,
     });
     if (!product.length) throw new Error('Product does not exist');
-    res.status(200).json(product);
+    res.render('shop/productDescription', {
+      product: product[0],
+    });
   } catch (err) {
     res
       .status(404)

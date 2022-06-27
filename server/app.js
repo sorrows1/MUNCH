@@ -14,9 +14,10 @@ const passport = require('passport');
 
 const mainRoute = require('./routes/main');
 
-const productRoute = require('./routes/product/product.route');
+// const productRoute = require('./routes/product/product.route');
 const ingredientRoute = require('./routes/product/ingredient.route');
-const shopRoute = require('./routes/product/shop.route')
+const shopRoute = require('./routes/shop.route')
+const dashboardRoute = require('./routes/dashboard.route')
 const userRoute = require('./routes/user');
 const promotionRoute = require('./routes/promotion');
 const reviewRoute = require('./routes/review');
@@ -95,6 +96,7 @@ app.use('/', mainRoute)
 // app.use('/api/v1/products', productRoute);
 app.use('/api/v1/ingredients', ingredientRoute);
 app.use('/shop', shopRoute);
+app.use('/dashboard', dashboardRoute);
 app.use('/user', userRoute);
 app.use('/promotion', promotionRoute);
 app.use('/review', reviewRoute);

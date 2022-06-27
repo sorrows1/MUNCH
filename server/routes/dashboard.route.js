@@ -1,5 +1,5 @@
 const express = require('express');
-const shopController = require('../../controllers/product/shop.controller');
+const productController = require('../controllers/dashboard/product.controller')
 const router = express.Router();
 
 const multer = require('multer');
@@ -36,20 +36,20 @@ const uploadImage = multer({
   fileFilter: (req, file, callback) => {
     checkFileType(file, callback);
   },
-}).single('image')
+}).single('image');
 
-
-router.param('id', shopController.checkID);
-
-router
-  .route('/')
-  .get(shopController.getAllProducts)
-  .post(shopController.createProduct);
+// router.param('id', productController.checkID);
 
 router
-  .route('/:id')
-  .get(shopController.getProduct)
-  .delete(shopController.removeProduct)
-  .patch(shopController.updateProduct);
+  .route('/productList')
+  .get(productController.getAllProducts)
+
+router.route('/createProduct').get(productController.createProduct).post(productController.createProduct)
+
+router
+  .route('/product/:id')
+  .get(productController.getProduct)
+  .delete(productController.removeProduct)
+  .patch(productController.updateProduct);
 
 module.exports = router;

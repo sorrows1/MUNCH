@@ -1,4 +1,9 @@
+body{
+  font-family: 'Rubik', 'Inter', 'sans-serif';
+}
+
 .logo {
   width: 130px;
   margin: auto;
 }
+
