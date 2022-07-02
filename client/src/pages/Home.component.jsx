@@ -22,7 +22,7 @@ const Home = () => {
               A healthy meal delivered to your door, every single day
             </Typography>
             <Typography variant='h6' component='p' color='textSecondary' sx={{fontWeight: 400, mb:3.8}}>
-              The most healthy food-commerce store that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.
+              The smart 365-days-per-year food subscription that will make you eat healthy again. Tailored to your personal tastes and nutritional needs.
             </Typography>
             <Toolbar disableGutters>
               <Button variant="contained" LinkComponent={RouterLink} to='/shop' sx={{boxShadow: 'none', padding: '11px 18px'}}>
