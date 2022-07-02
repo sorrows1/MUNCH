@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 const Product = require('../../models/Product/Product.model');
 const Ingredient = require('../../models/Product/Ingredient.model');
 const Nutrient = require('../../models/Product/Nutrient.model');
@@ -17,6 +19,9 @@ const {
   removeProductNutrients,
   removeProductTypes,
 } = require('../../helper/updateProduct.helper');
+const sequelize = require('../../config/database');
+
+const Op = Sequelize.Op;
 
 // exports.checkID = (req, res, next, val) => {
 //   if (+val > 10)
@@ -69,7 +74,17 @@ exports.getProduct = async (req, res) => {
       ],
     });
     if (!product.length) throw new Error('Product does not exist');
-    res.status(200).json(product);
+    const productTypes = product[0].types.map((val) => val.id);
+    const diets = await Type.findAll({
+      where: {
+        id: { [Op.notIn]: productTypes },
+      },
+      raw: true,
+    });
+    res.status(200).render('dashboard/editProduct', {
+      ...product[0],
+      diets,
+    });
   } catch (err) {
     res
       .status(404)
@@ -107,13 +122,16 @@ exports.createProduct = async (req, res) => {
       });
     }
   }
-  res.render('dashboard/createProduct')
-  
+  const types = await Type.findAll({ raw: true });
+  res.render('dashboard/createProduct', {
+    types,
+  });
 };
 
 exports.updateProduct = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
     const {
       createAndUpdate: { ingredients, nutrients, types },
       remove: {
